@@ -1,51 +1,64 @@
 package hw3Epl231;
 
-//hashtable<int,list<list<Node>>>
-public class HashTable<K extends Integer, V> {
+import java.util.ArrayList;
+
+public class HashTable<T extends NodeID> {
+	//size of hashtable array
 	private int size;
-	private HashNode<K, V> table[];
-	private int used;
+	//each list is a set of non-neighbours nodes
+	private ArrayList<T> table[];
+	//number of nodes in hashtbale
+	private int nodes;
 
 	public HashTable() {
-		size = 5;
-		used = 0;
-		table = new HashNode[5];
+		size = 50;
+		nodes = 0;
+		table = new ArrayList[50];
 	}
 
-	public int hashFunction(K num) {
+	public int hashFunction(int num) {
+		if (num % size < 0 || num % size >= size)
+			return 0;
 		return num % size;
 	}
 
 	public void rehash(int newSize) {
+		int sizeTemp = size;
 		size = newSize;
-		HashNode<K, V> temp[] = new HashNode[newSize];
-		for (int i = 0; i < used; i++) {
-			temp[i] = table[i];
+		ArrayList<T> temp[] = new ArrayList[newSize];
+		for (int i = 0; i < sizeTemp; i++) {
+			for (int j = 0; j < table[i].size(); j++) {
+				//position in new table
+				int position = hashFunction(table[i].get(j).getID());
+				temp[position].add(table[i].get(j));
+			}
 		}
 		table = temp;
 	}
 
-	public int getUsed() {
-		return used;
+	public int getNodes() {
+		return nodes;
 	}
 
 	public int getSizeOfArray() {
 		return size;
 	}
 
-	public void add(K key, V value) {
-		used++;
-		if(used>size) {
-			System.out.println("Not enough space in Hashtable, rehashing with double the previous size!");
-			rehash(size*2);
-		}
-		int position = hashFunction(key);
-		table[position] = new HashNode(key, value);
+	public void add(T node) {
+		nodes++;
+		int position = hashFunction(node.getID());
+		table[position].add(node);
+		if (table[position].size() >= 20)
+			rehash(size * 10);
 	}
-	
-	public V getValueWithKey(K i) {
-		if(table[hashFunction(i)]==null)
+
+	public ArrayList getListAt(int index) {
+		if (index < 0 || index >= size)
 			return null;
-		return table[hashFunction(i)].getValue();
+		return table[index];
+	}
+
+	public ArrayList getListWithID(int id) {
+		return table[hashFunction(id)];
 	}
 }

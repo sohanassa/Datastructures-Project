@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class Graph {
 
-	private HashTable<Integer, ArrayList<ArrayList<GraphNode>>> h;
+	private HashTable<GraphNode> h;
 	
-	
+	public Graph() {
+		h = new HashTable();
+	}
 }
