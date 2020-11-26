@@ -9,7 +9,7 @@ public class GraphNode implements NodeID {
 	private int ID;
 	private boolean isFireStation;
 	private int temperture;
-	private ArrayList<Integer> neighbours;
+	private ArrayList<GraphNode> neighbours;
 
 	public GraphNode(int x, int y, int id, boolean isFireStation, int temperture) {
 		this.x = x;
@@ -17,7 +17,7 @@ public class GraphNode implements NodeID {
 		this.ID = id;
 		this.isFireStation = isFireStation;
 		this.temperture = temperture;
-		neighbours = new ArrayList<Integer>();
+		neighbours = new ArrayList<GraphNode>();
 	}
 
 	public int getID() {
@@ -36,7 +36,7 @@ public class GraphNode implements NodeID {
 		return isFireStation;
 	}
 
-	public ArrayList<Integer> getNeighbours() {
+	public ArrayList<GraphNode> getNeighbours() {
 		return neighbours;
 	}
 	
@@ -44,10 +44,16 @@ public class GraphNode implements NodeID {
 		if(node==null)
 			return false;
 		for(int i=0; i<neighbours.size(); i++) {
-			if(neighbours.get(i).equals(node.getID()))
+			if(neighbours.get(i).equals(node))
 				return true;
 		}
 		//neighbours.contains(node);
+		return false;
+	}
+	
+	public boolean equals(GraphNode node) {
+		if(ID == node.getID())
+			return true;
 		return false;
 	}
 }
