@@ -19,6 +19,7 @@ public class HashTable<T extends NodeID> {
 	public int hashFunction(int num) {
 		if (num % size < 0 || num % size >= size)
 			return 0;
+		// 0 ~ size-1
 		return num % size;
 	}
 

@@ -1,6 +1,7 @@
 package hw3Epl231;
 
 import java.util.ArrayList;
+
 import java.math.*;
 
 public class Graph {
@@ -12,14 +13,14 @@ public class Graph {
 		h = new HashTable();
 	}
 
-	public void add(GraphNode node, int dis) {
+	public void add(GraphNode node, int weight) {
 		checkNull(node);
 		h.add(node);
-		createEdges(node, dis);
+		createEdges(node, weight);
 		V++;
 	}
 
-	private void createEdges(GraphNode node, int dis) {
+	private void createEdges(GraphNode node, int maxDist) {
 
 	}
 
@@ -36,6 +37,7 @@ public class Graph {
 			if ((Integer) list.get(i) == node.getID())
 				list.remove(i);
 		}
+		// werk here
 	}
 
 	public boolean vertexExists(GraphNode node) {
@@ -58,6 +60,46 @@ public class Graph {
 		if (o == null) {
 			System.out.println("NULL POINTER!");
 			System.exit(-1);
+		}
+	}
+	
+	public void prim() {
+
+		double weight = 0;
+
+		boolean visited[] = new boolean[V];
+		for (int i = 0; i < V; i++)
+			visited[i] = false;
+
+		int closest[] = new int[this.V];
+		for (int i = 0; i < V; i++)
+			closest[i] = -1;
+		double distance[] = new double[this.V];
+		for (int i = 0; i < V; i++)
+			distance[i] = Double.MAX_VALUE;
+
+		ArrayList<Edge<GraphNode>> tree = new ArrayList<Edge<GraphNode>>();
+
+		int v = 0;
+		visited[v] = true;
+
+		/** ADD YOUR CODE HERE **/
+		
+		System.out.println("Î¤ÎµÎ»Î¹ÎºÏŒ Î•Î»Î¬Ï‡Î¹ÏƒÏ„Î¿Â Î“ÎµÎ½Î½Î·Ï„Î¿Ï�Î¹ÎºÏŒÂ Î”Î­Î½Î´Ï�Î¿ (Î•Î“Î”) Î¼Îµ Î²Î¬Ï�Î¿Ï‚ " + weight);
+		for (int i = 0; i < tree.size(); i++)
+			System.out.println(tree.get(i));
+
+	}
+	
+	private class Edge<E> {
+		E v1;
+		E v2;
+		double weight;
+
+		Edge(E v1, E v2, double weight) {
+			this.v1 = v1;
+			this.v2 = v2;
+			this.weight = weight;
 		}
 	}
 

@@ -44,9 +44,10 @@ public class GraphNode implements NodeID {
 		if(node==null)
 			return false;
 		for(int i=0; i<neighbours.size(); i++) {
-			if(neighbours.get(i) == node.getID())
+			if(neighbours.get(i).equals(node.getID()))
 				return true;
 		}
+		//neighbours.contains(node);
 		return false;
 	}
 }
