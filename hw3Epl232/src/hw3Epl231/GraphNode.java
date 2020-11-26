@@ -4,14 +4,18 @@ import java.awt.List;
 import java.util.ArrayList;
 
 public class GraphNode implements NodeID {
+	private int x;
+	private int y;
 	private int ID;
-	private char type;
-	private ArrayList<GraphNode> neighbours;
+	private boolean isFireStation;
+	private ArrayList<Integer> neighbours;
 	
-	public GraphNode(int id, char type) {
+	public GraphNode(int x, int y, int id, boolean isFireStation) {
+		this.x=x;
+		this.y=y;
 		this.ID=id;
-		this.type=type;
-		neighbours = new ArrayList<GraphNode>();
+		this.isFireStation = isFireStation;
+		neighbours = new ArrayList<Integer>();
 	}
 	
 	public int getID() {
