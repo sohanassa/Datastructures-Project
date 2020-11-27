@@ -148,7 +148,7 @@ public class Graph {
 		return -1;
 	}
 	
-	public void prim() {
+	public ArrayList<Edge<GraphNode>> prim() {
 
 		double weight = 0;
 		
@@ -188,6 +188,8 @@ public class Graph {
 				else
 					i=findNonVisited(visited);
 		}
+		
+		return tree;
 	
 	}
 
