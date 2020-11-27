@@ -11,6 +11,8 @@ public class Graph {
 
 	public Graph() {
 		h = new HashTable();
+		V=0;
+		E=0;
 	}
 
 	public void add(GraphNode node, int weight) {
