@@ -1,7 +1,9 @@
 package hw3Epl231;
 
 import java.util.ArrayList;
-
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 import java.math.*;
 
 public class Graph {
@@ -23,7 +25,6 @@ public class Graph {
 	}
 
 	private void createEdges(GraphNode node, int maxDist) {
-
 	}
 
 	public boolean isEdge(GraphNode node1, GraphNode node2) {
@@ -33,6 +34,7 @@ public class Graph {
 	}
 
 	public void removeVertex(GraphNode node) {
+		V--;
 		checkNull(node);
 		ArrayList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
@@ -200,6 +202,13 @@ public class Graph {
 	
 	public int getE() {
 		return E;
+	}
+	
+
+	private void printMinimumSpanningTree(Set<Edge<GraphNode>> tree) {
+		Queue q = new LinkedList();
+		// S O  I A M  C O N F U S S I O N 
+		
 	}
 	
 	public String toString() {

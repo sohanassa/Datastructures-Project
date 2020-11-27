@@ -35,8 +35,7 @@ public class ForestSensors {
 
 			case 6:
 				saveGraphInFile(g, args[0]);
-				break;
-
+				return;
 			}
 		}
 	}
@@ -120,4 +119,5 @@ public class ForestSensors {
 			System.out.println(e.getMessage());
 		}
 	}
+	
 }
