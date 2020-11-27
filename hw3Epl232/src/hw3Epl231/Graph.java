@@ -175,13 +175,13 @@ public class Graph {
 		int i=0;
 		while(!allVisited) {
 			visited[i]=true;
-			tree.add(nodes.get(i));	//houston we got a problem
 			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
 			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
 			ArrayList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
 			int index = findNextNode(visitedNeighbours, closest, distance);
-			if(index!=-1)
-				i=index;
+			if(index!=-1) {
+				tree.add(new Edge(nodes.get(i), nodes.get(index), getWeight(nodes.get(i), nodes.get(index))));
+				i=index;}
 			else
 				if(allVisited(visited))
 					allVisited=true;
