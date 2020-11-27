@@ -66,5 +66,4 @@ public class HashTable<T extends NodeID> {
 	public ArrayList getListWithID(int id) {
 		return table[hashFunction(id)];
 	}
-
 }

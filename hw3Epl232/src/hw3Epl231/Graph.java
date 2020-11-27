@@ -14,7 +14,7 @@ public class Graph {
 		V = 0;
 		E = 0;
 	}
-
+	
 	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
 		h.add(node);
@@ -163,6 +163,26 @@ public class Graph {
 			this.v2 = v2;
 			this.weight = weight;
 		}
+	}
+	
+	public int getV() {
+		return V;
+	}
+	
+	public int getE() {
+		return E;
+	}
+	
+	public String toString() {
+		String s="";
+		for(int i=0; i<h.getSizeOfArray(); i++) {
+			if(h.getListAt(i)!=null)
+				for(int j=0; j<h.getListAt(i).size(); j++) {
+					s+=h.getListAt(i).get(j).toString();
+					s+="\n";
+				}
+		}
+		return s;
 	}
 
 }
