@@ -156,14 +156,6 @@ public class Graph {
 		for (int i = 0; i < V; i++)
 			visited[i] = false;
 
-/*		int closest[] = new int[this.V];
-		for (int i = 0; i < V; i++)
-			closest[i] = -1;	*/
-
-	/*	double distance[] = new double[this.V];
-		for (int i = 0; i < V; i++)
-			distance[i] = Double.MAX_VALUE;	*/
-
 		ArrayList<Edge<GraphNode>> tree = new ArrayList<Edge<GraphNode>>();
 
 		ArrayList<GraphNode> nodes = createArrayOfNodes();
