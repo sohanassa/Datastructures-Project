@@ -20,7 +20,6 @@ public class ForestSensors {
 	private static int getOption() {
 		Scanner user = new Scanner(System.in);
 		int option = 0;
-
 		// READNG FROM USER
 		System.out.println("Please select an option:");
 		System.out.println("1 - Calculate minimum spanning tree!");
