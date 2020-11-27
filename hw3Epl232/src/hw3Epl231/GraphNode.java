@@ -57,10 +57,14 @@ public class GraphNode implements NodeID {
 			return true;
 		return false;
 	}
-
-	public String toString() {
+	
+	public String getStringStatus() {
 		String s="";
 		s=s+ID+"\t"+"["+x+","+y+"]"+"\t"+temperture;
 		return s;
+	}
+	
+	public String toString() {
+		return ID;
 	}
 }

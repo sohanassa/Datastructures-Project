@@ -243,29 +243,6 @@ public class Graph {
 		return min; // Return the minimum among all distances
 	}
 
-
-	private class MyEdge<E> {
-		E v1;
-		E v2;
-		double weight;
-
-		MyEdge(E v1, E v2, double weight) {
-			this.v1 = v1;
-			this.v2 = v2;
-			this.weight = weight;
-		}
-	}
-	
-=======
->>>>>>> branch 'master' of https://github.com/sohanassa/EPL231-HW3.git
-	public int getV() {
-		return V;
-	}
-
-	public int getE() {
-		return E;
-	}
-
 	private void printMinimumSpanningTree(ArrayList<MyEdge<GraphNode>> tree) {
 		// queue to use for BFS
 		Queue<GraphNode> q = new LinkedList();
