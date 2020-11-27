@@ -117,6 +117,37 @@ public class Graph {
 		return visitedNeighbours;
 	}
 
+	public int findNextNode(ArrayList<Integer> visitedNeighbours, ArrayList<GraphNode> closest, ArrayList<Integer> distance) {
+		
+		if(!visitedNeighbours.contains(new Integer(0)))
+			return -1;
+		
+		Integer min = new Integer(-1);
+		int index = -1;
+		for(int i=0; i<visitedNeighbours.size();i++)
+			if(visitedNeighbours.get(i).equals(new Integer(0)))
+				if(distance.get(i).compareTo(min)<0) {
+					min = distance.get(i);
+					index = i;
+				}
+		return index;
+		
+	}
+	
+	public boolean allVisited(boolean[] visited) {
+		for(int i=0; i<visited.length; i++)
+			if(!visited[i])
+				return false;
+		return true;
+	}
+	
+	public int findNonVisited(boolean[] visited) {
+		for(int i=0; i<visited.length; i++)
+			if(!visited[i])
+				return i;
+		return -1;
+	}
+	
 	public void prim() {
 
 		double weight = 0;
@@ -140,17 +171,24 @@ public class Graph {
 		/*GraphNode v = nodes.get(0);
 		visited[0] = true; 	*/
 
-		for(int i=0; i<nodes.size(); i++) {
+		boolean allVisited=false;
+		int i=0;
+		while(!allVisited) {
 			visited[i]=true;
+			tree.add(nodes.get(i));
 			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
 			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
 			ArrayList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
 			int index = findNextNode(visitedNeighbours, closest, distance);
-			
+			if(index!=-1)
+				i=index;
+			else
+				if(allVisited(visited))
+					allVisited=true;
+				else
+					i=findNonVisited(visited);
 		}
-			
 	
-
 	}
 
 	private class Edge<E> {
