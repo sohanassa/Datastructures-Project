@@ -77,6 +77,20 @@ public class Graph {
 		
 	}
 	
+	public ArrayList<GraphNode> getClosestNeighbours(GraphNode n){
+		ArrayList<GraphNode> closest = new ArrayList<GraphNode>();
+		for(int i=0; i<n.getNeighbours().size(); i++)
+			closest.add(n.getNeighbours().get(i));
+		return closest;
+	}
+	
+	public ArrayList<Integer> getDistance(GraphNode n, ArrayList<GraphNode> closest){
+		ArrayList<Integer> distance = new ArrayList<Integer>();
+		for(int i=0; i<closest.size(); i++)
+			distance.add(new Integer((int) getWeight(n, closest.get(i))));
+		return distance;
+	}
+	
 	public void prim() {
 
 		double weight = 0;
@@ -85,26 +99,30 @@ public class Graph {
 		for (int i = 0; i < V; i++)
 			visited[i] = false;
 
-		int closest[] = new int[this.V];
+/*		int closest[] = new int[this.V];
 		for (int i = 0; i < V; i++)
-			closest[i] = -1;
+			closest[i] = -1;	*/
 
-		double distance[] = new double[this.V];
+	/*	double distance[] = new double[this.V];
 		for (int i = 0; i < V; i++)
-			distance[i] = Double.MAX_VALUE;
+			distance[i] = Double.MAX_VALUE;	*/
 
 		ArrayList<Edge<GraphNode>> tree = new ArrayList<Edge<GraphNode>>();
 
+		ArrayList<GraphNode> nodes = createArrayOfNodes();
 
-		GraphNode v = h.get;
-		visited[v] = true; 
+		/*GraphNode v = nodes.get(0);
+		visited[0] = true; 	*/
 
-		
-		/** ADD YOUR CODE HERE **/
-
-		System.out.println("Τελικό Ελάχιστο Γεννητορικό Δένδρο (ΕΓΔ) με βάρος " + weight);
-		for (int i = 0; i < tree.size(); i++)
-			System.out.println(tree.get(i));
+		for(int i=0; i<nodes.size(); i++) {
+			visited[i]=true;
+			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
+			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
+			
+			
+		}
+			
+	
 
 	}
 
