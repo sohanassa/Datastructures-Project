@@ -36,17 +36,19 @@ public class Graph {
 	public void removeVertex(GraphNode node) {
 		V--;
 		checkNull(node);
-		ArrayList list = h.getListWithID(Integer.parseInt(node.getID()));
+		LinkedList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == Integer.parseInt(node.getID()))
+			if ((Integer) list.get(i) == Integer.parseInt(node.getID())) {
 				list.remove(i);
+				break;
+			}
 		}
 		// werk here
 	}
-
+	
 	public boolean vertexExists(GraphNode node) {
 		checkNull(node);
-		ArrayList list = h.getListWithID(Integer.parseInt(node.getID()));
+		LinkedList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
 			if ((Integer) list.get(i) == Integer.parseInt(node.getID()))
 				return true;
@@ -67,9 +69,9 @@ public class Graph {
 		}
 	}
 
-	public ArrayList<GraphNode> createArrayOfNodes() {
+	public LinkedList<GraphNode> createArrayOfNodes() {
 
-		ArrayList<GraphNode> tab = new ArrayList<GraphNode>(V);
+		LinkedList<GraphNode> tab = new LinkedList<GraphNode>();
 
 		for (int i = 0; i < h.getSizeOfArray(); i++)
 			if (h.getListAt(i) != null)
@@ -79,15 +81,15 @@ public class Graph {
 
 	}
 
-	public ArrayList<GraphNode> getClosestNeighbours(GraphNode n) {
-		ArrayList<GraphNode> closest = new ArrayList<GraphNode>();
+	public LinkedList<GraphNode> getClosestNeighbours(GraphNode n) {
+		LinkedList<GraphNode> closest = new LinkedList<GraphNode>();
 		for (int i = 0; i < n.getNeighbours().size(); i++)
 			closest.add(n.getNeighbours().get(i));
 		return closest;
 	}
 
-	public ArrayList<Integer> getDistance(GraphNode n, ArrayList<GraphNode> closest) {
-		ArrayList<Integer> distance = new ArrayList<Integer>();
+	public LinkedList<Integer> getDistance(GraphNode n, LinkedList<GraphNode> closest) {
+		LinkedList<Integer> distance = new LinkedList<Integer>();
 		for (int i = 0; i < closest.size(); i++)
 			distance.add(new Integer((int) getWeight(n, closest.get(i))));
 		return distance;
@@ -105,8 +107,8 @@ public class Graph {
 		return -1;
 	}
 
-	public ArrayList<Integer> visitedNeighbours(boolean[] visited, ArrayList<GraphNode> closest, GraphNode node){
-		ArrayList<Integer> visitedNeighbours = new ArrayList<Integer>();
+	public LinkedList<Integer> visitedNeighbours(boolean[] visited, LinkedList<GraphNode> closest, GraphNode node){
+		LinkedList<Integer> visitedNeighbours = new LinkedList<Integer>();
 		
 		for(int i=0; i<closest.size(); i++) {
 			int index=getIndexOfNode(closest.get(i));
@@ -119,7 +121,7 @@ public class Graph {
 		return visitedNeighbours;
 	}
 
-	public int findNextNode(ArrayList<Integer> visitedNeighbours, ArrayList<GraphNode> closest, ArrayList<Integer> distance) {
+	public int findNextNode(LinkedList<Integer> visitedNeighbours, LinkedList<GraphNode> closest, LinkedList<Integer> distance) {
 		
 		if(!visitedNeighbours.contains(new Integer(0)))
 			return -1;
@@ -150,7 +152,7 @@ public class Graph {
 		return -1;
 	}
 	
-	public ArrayList<Edge<GraphNode>> prim() {
+	public ArrayList<MyEdge<GraphNode>> prim() {
 
 		double weight = 0;	//i didnt use this wtf im supposed to use it
 		
@@ -158,20 +160,20 @@ public class Graph {
 		for (int i = 0; i < V; i++)
 			visited[i] = false;
 
-		ArrayList<Edge<GraphNode>> tree = new ArrayList<Edge<GraphNode>>();
+		ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
 
-		ArrayList<GraphNode> nodes = createArrayOfNodes();
+		LinkedList<GraphNode> nodes = createArrayOfNodes();
 
 		boolean allVisited=false;
 		int i=0;
 		while(!allVisited) {
 			visited[i]=true;
-			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
-			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
-			ArrayList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
+			LinkedList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
+			LinkedList<Integer> distance = getDistance(nodes.get(i), closest);
+			LinkedList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
 			int index = findNextNode(visitedNeighbours, closest, distance);
 			if(index!=-1) {
-				tree.add(new Edge(nodes.get(i), nodes.get(index), getWeight(nodes.get(i), nodes.get(index))));
+				tree.add(new MyEdge(nodes.get(i), nodes.get(index), getWeight(nodes.get(i), nodes.get(index))));
 				i=index;}
 			else
 				if(allVisited(visited))
@@ -184,12 +186,12 @@ public class Graph {
 	
 	}
 
-	private class Edge<E> {
+	private class MyEdge<E> {
 		E v1;
 		E v2;
 		double weight;
 
-		Edge(E v1, E v2, double weight) {
+		MyEdge(E v1, E v2, double weight) {
 			this.v1 = v1;
 			this.v2 = v2;
 			this.weight = weight;
@@ -205,7 +207,7 @@ public class Graph {
 	}
 	
 
-	private void printMinimumSpanningTree(Set<Edge<GraphNode>> tree) {
+	private void printMinimumSpanningTree(ArrayList<MyEdge<GraphNode>> tree) {
 		Queue q = new LinkedList();
 		// S O  I A M  C O N F U S S I O N 
 		

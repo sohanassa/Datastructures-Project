@@ -1,19 +1,21 @@
 package hw3Epl231;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 public class HashTable<T extends NodeID> {
 	// size of hashtable array
 	private int size;
 	// each list is a set of non-neighbours nodes
-	private ArrayList<T> table[];
+	private LinkedList<T> table[];
 	// number of nodes in hashtbale
 	private int nodes;
 
 	public HashTable() {
 		size = 5;
 		nodes = 0;
-		table = new ArrayList[size];
+		table = new LinkedList[size];
 	}
 
 	public int hashFunction(int num) {
@@ -26,13 +28,13 @@ public class HashTable<T extends NodeID> {
 	public void rehash(int newSize) {
 		int sizeTemp = size;
 		size = newSize;
-		ArrayList<T> temp[] = new ArrayList[newSize];
+		LinkedList<T> temp[] = new LinkedList[newSize];
 		for (int i = 0; i < sizeTemp; i++) {
 			for (int j = 0; j < table[i].size(); j++) {
 				// position in new table
 				int position = hashFunction(Integer.parseInt(table[i].get(j).getID()));
 				if (temp[position] == null)
-					temp[position] = new ArrayList<T>();
+					temp[position] = new LinkedList<T>();
 				temp[position].add(table[i].get(j));
 			}
 		}
@@ -51,19 +53,62 @@ public class HashTable<T extends NodeID> {
 		nodes++;
 		int position = hashFunction(Integer.parseInt(node.getID()));
 		if (table[position] == null)
-			table[position] = new ArrayList<T>();
+			table[position] = new LinkedList<T>();
 		table[position].add(node);
 		if (table[position].size() >= 20)
 			rehash(size * 10);
 	}
 
-	public ArrayList getListAt(int index) {
+	public LinkedList getListAt(int index) {
 		if (index < 0 || index >= size)
 			return null;
 		return table[index];
 	}
 
-	public ArrayList getListWithID(int id) {
+	public LinkedList getListWithID(int id) {
 		return table[hashFunction(id)];
 	}
+	
+	public static void main(String[] args) {
+		HashTable<GraphNode> h = new HashTable();
+		h.add(new GraphNode(1, 1, "01", false, 10));
+		h.add(new GraphNode(1, 1, "02", false, 10));
+		h.add(new GraphNode(1, 1, "03", false, 10));
+		h.add(new GraphNode(1, 1, "04", false, 10));
+		h.add(new GraphNode(1, 1, "05", false, 10));
+		h.add(new GraphNode(1, 1, "06", false, 10));
+		h.add(new GraphNode(1, 1, "07", false, 10));
+		h.add(new GraphNode(1, 1, "08", false, 10));
+		h.add(new GraphNode(1, 1, "09", false, 10));
+		h.add(new GraphNode(1, 1, "10", false, 10));
+		h.add(new GraphNode(1, 1, "11", false, 10));
+		h.add(new GraphNode(1, 1, "12", false, 10));
+		h.add(new GraphNode(1, 1, "13", false, 10));
+		h.add(new GraphNode(1, 1, "14", false, 10));
+		h.add(new GraphNode(1, 1, "15", false, 10));
+		h.add(new GraphNode(1, 1, "16", false, 10));
+		h.add(new GraphNode(1, 1, "17", false, 10));
+		h.add(new GraphNode(1, 1, "18", false, 10));
+		h.add(new GraphNode(1, 1, "19", false, 10));
+		h.add(new GraphNode(1, 1, "20", false, 10));
+		h.add(new GraphNode(1, 1, "21", false, 10));
+		h.add(new GraphNode(1, 1, "22", false, 10));
+		h.getListWithID(1);
+		Iterator<GraphNode> it = h.getListWithID(1).iterator();
+		while(it.hasNext()) {
+			it.next().getID().contentEquals("01");
+		}
+		System.out.println(h.getListWithID(1).pop());
+		System.out.println(h.getListWithID(1).pop());
+		System.out.println(h.getListWithID(1).pop());
+		System.out.println(h.getListWithID(1).pop());
+		
+		
+	}
 }
+
+
+
+
+
+

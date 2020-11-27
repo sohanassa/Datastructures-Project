@@ -2,6 +2,7 @@ package hw3Epl231;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GraphNode implements NodeID {
 	private int x;
@@ -9,7 +10,7 @@ public class GraphNode implements NodeID {
 	private String ID;
 	private boolean isFireStation;
 	private int temperture;
-	private ArrayList<GraphNode> neighbours;
+	private LinkedList<GraphNode> neighbours;
 
 	public GraphNode(int x, int y, String id, boolean isFireStation, int temperture) {
 		this.x = x;
@@ -17,7 +18,7 @@ public class GraphNode implements NodeID {
 		this.ID = id;
 		this.isFireStation = isFireStation;
 		this.temperture = temperture;
-		neighbours = new ArrayList<GraphNode>();
+		neighbours = new LinkedList<GraphNode>();
 	}
 
 	public String getID() {
@@ -36,7 +37,7 @@ public class GraphNode implements NodeID {
 		return isFireStation;
 	}
 
-	public ArrayList<GraphNode> getNeighbours() {
+	public LinkedList<GraphNode> getNeighbours() {
 		return neighbours;
 	}
 
