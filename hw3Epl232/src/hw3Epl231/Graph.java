@@ -67,8 +67,13 @@ public class Graph {
 
 	public ArrayList<GraphNode> createArrayOfNodes() {
 		
-		 ArrayList<GraphNode> tab = new  ArrayList<GraphNode>(V);
-		tab.addAll(h.getTable);
+		ArrayList<GraphNode> tab = new  ArrayList<GraphNode>(V);
+		
+		for(int i=0; i<h.getSizeOfArray(); i++)
+			if(h.getListAt(i)!=null)
+				tab.addAll(h.getListAt(i));
+		
+		return tab;
 		
 	}
 	
