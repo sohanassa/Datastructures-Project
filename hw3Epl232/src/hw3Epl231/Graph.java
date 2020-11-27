@@ -152,6 +152,7 @@ public class Graph {
 		return -1;
 	}
 	
+	/*
 	public ArrayList<MyEdge<GraphNode>> prim() {
 
 		double weight = 0;	//i didnt use this wtf im supposed to use it
@@ -184,7 +185,59 @@ public class Graph {
 		
 		return tree;
 	
+	}	*/
+	
+	public void prim() {
+
+		double weight = 0;
+		
+		boolean visited[] = new boolean[V];
+		for (int i = 0; i < V; i++)
+			visited[i] = false;
+
+		GraphNode closest[] = new GraphNode[this.V];
+		for (int i = 0; i < V; i++)
+			closest[i] = null;
+
+		double distance[] = new double[this.V];
+		for (int i = 0; i < V; i++)
+			distance[i] = Double.MAX_VALUE;
+
+		ArrayList<MyEdge> tree = new ArrayList<MyEdge>();
+
+		LinkedList<GraphNode> nodes = createArrayOfNodes();
+		
+		GraphNode v = nodes.get(0);
+		visited[0] = true;
+		
+		for(int i=0; i<V; i++) {
+			LinkedList<GraphNode> neighbours = getClosestNeighbours(nodes.get(i));
+			for(int c=0; c<neighbours.size(); c++) 
+				if(getWeight(nodes.get(i), neighbours.get(c))<distance[i]) {
+					distance[getIndexOfNode(neighbours.get(c))]=getWeight(nodes.get(i), neighbours.get(c));
+					closest[getIndexOfNode(neighbours.get(c))]= nodes.get(i);
+				}
+			v = minVertex(visited, distance);
+			visited[getIndexOfNode(v)]=true;
+			tree.add(new MyEdge(closest[getIndexOfNode(v)], v, getWeight(closest[getIndexOfNode(v)], v)));
+		}
+
 	}
+
+	private GraphNode minVertex(boolean visited[], double distance[]) {
+		int min = 0;
+		double minimum = Double.MAX_VALUE;
+		for (int i = 0; i < V; i++) {
+			if (visited[i] == true)
+				continue; // skip nodes already in MST
+			if (distance[i] < minimum){
+				min = i;
+				minimum = distance[i];
+			}
+		}
+		return min; // Return the minimum among all distances
+	}
+
 
 	private class MyEdge<E> {
 		E v1;
