@@ -32,6 +32,7 @@ public class ForestSensors {
 		System.out.print("-> ");
 		option = user.nextInt();
 
+		
 		while (option < 1 || option > 6) {
 			System.out.println("Wrong input, try again!");
 			System.out.print("-> ");
