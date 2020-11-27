@@ -175,7 +175,7 @@ public class Graph {
 		int i=0;
 		while(!allVisited) {
 			visited[i]=true;
-			tree.add(nodes.get(i));
+			tree.add(nodes.get(i));	//houston we got a problem
 			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
 			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
 			ArrayList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
