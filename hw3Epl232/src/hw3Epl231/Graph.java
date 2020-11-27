@@ -168,9 +168,6 @@ public class Graph {
 
 		ArrayList<GraphNode> nodes = createArrayOfNodes();
 
-		/*GraphNode v = nodes.get(0);
-		visited[0] = true; 	*/
-
 		boolean allVisited=false;
 		int i=0;
 		while(!allVisited) {
