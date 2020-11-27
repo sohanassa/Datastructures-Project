@@ -64,11 +64,23 @@ public class Graph {
 			System.exit(-1);
 		}
 	}
+
+	public ArrayList<GraphNode> createArrayOfNodes() {
+		
+		ArrayList<GraphNode> tab = new  ArrayList<GraphNode>(V);
+		
+		for(int i=0; i<h.getSizeOfArray(); i++)
+			if(h.getListAt(i)!=null)
+				tab.addAll(h.getListAt(i));
+		
+		return tab;
+		
+	}
 	
 	public void prim() {
 
 		double weight = 0;
-
+		
 		boolean visited[] = new boolean[V];
 		for (int i = 0; i < V; i++)
 			visited[i] = false;
@@ -76,23 +88,26 @@ public class Graph {
 		int closest[] = new int[this.V];
 		for (int i = 0; i < V; i++)
 			closest[i] = -1;
+
 		double distance[] = new double[this.V];
 		for (int i = 0; i < V; i++)
 			distance[i] = Double.MAX_VALUE;
 
 		ArrayList<Edge<GraphNode>> tree = new ArrayList<Edge<GraphNode>>();
 
-		int v = 0;
-		visited[v] = true;
 
-		/** ADD YOUR CODE HERE **/
+		GraphNode v = h.get;
+		visited[v] = true; 
+
 		
-		System.out.println("Î¤ÎµÎ»Î¹ÎºÏŒ Î•Î»Î¬Ï‡Î¹ÏƒÏ„Î¿Â Î“ÎµÎ½Î½Î·Ï„Î¿Ï�Î¹ÎºÏŒÂ Î”Î­Î½Î´Ï�Î¿ (Î•Î“Î”) Î¼Îµ Î²Î¬Ï�Î¿Ï‚ " + weight);
+		/** ADD YOUR CODE HERE **/
+
+		System.out.println("������ �������� ����������� ������ (���) �� ����� " + weight);
 		for (int i = 0; i < tree.size(); i++)
 			System.out.println(tree.get(i));
 
 	}
-	
+
 	private class Edge<E> {
 		E v1;
 		E v2;
