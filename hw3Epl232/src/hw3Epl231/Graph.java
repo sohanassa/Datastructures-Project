@@ -14,7 +14,7 @@ public class Graph {
 		V=0;
 		E=0;
 	}
-
+	
 	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
 		h.add(node);
@@ -102,7 +102,7 @@ public class Graph {
 		
 		/** ADD YOUR CODE HERE **/
 
-		System.out.println("Τελικό Ελάχιστο Γεννητορικό Δένδρο (ΕΓΔ) με βάρος " + weight);
+		System.out.println("οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ (οΏ½οΏ½οΏ½) οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½ " + weight);
 		for (int i = 0; i < tree.size(); i++)
 			System.out.println(tree.get(i));
 
@@ -118,6 +118,26 @@ public class Graph {
 			this.v2 = v2;
 			this.weight = weight;
 		}
+	}
+	
+	public int getV() {
+		return V;
+	}
+	
+	public int getE() {
+		return E;
+	}
+	
+	public String toString() {
+		String s="";
+		for(int i=0; i<h.getSizeOfArray(); i++) {
+			if(h.getListAt(i)!=null)
+				for(int j=0; j<h.getListAt(i).size(); j++) {
+					s+=h.getListAt(i).get(j).toString();
+					s+="\n";
+				}
+		}
+		return s;
 	}
 
 }

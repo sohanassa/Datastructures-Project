@@ -39,35 +39,27 @@ public class GraphNode implements NodeID {
 	public ArrayList<GraphNode> getNeighbours() {
 		return neighbours;
 	}
-	
+
 	public boolean isNeightbour(GraphNode node) {
-		if(node==null)
+		if (node == null)
 			return false;
-		for(int i=0; i<neighbours.size(); i++) {
-			if(neighbours.get(i).equals(node))
+		for (int i = 0; i < neighbours.size(); i++) {
+			if (neighbours.get(i).equals(node))
 				return true;
 		}
-		//neighbours.contains(node);
+		// neighbours.contains(node);
 		return false;
 	}
-	
+
 	public boolean equals(GraphNode node) {
-		if(ID == node.getID())
+		if (ID == node.getID())
 			return true;
 		return false;
 	}
+
+	public String toString() {
+		String s="";
+		s=s+ID+"\t"+"["+x+","+y+"]"+"\t"+temperture;
+		return s;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
