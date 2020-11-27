@@ -11,8 +11,8 @@ public class Graph {
 
 	public Graph() {
 		h = new HashTable();
-		V=0;
-		E=0;
+		V = 0;
+		E = 0;
 	}
 
 	public void add(GraphNode node, int maxDist) {
@@ -34,9 +34,9 @@ public class Graph {
 
 	public void removeVertex(GraphNode node) {
 		checkNull(node);
-		ArrayList list = h.getListWithID(Integer. parseInt(node.getID()));
+		ArrayList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == Integer. parseInt(node.getID()))
+			if ((Integer) list.get(i) == Integer.parseInt(node.getID()))
 				list.remove(i);
 		}
 		// werk here
@@ -44,9 +44,9 @@ public class Graph {
 
 	public boolean vertexExists(GraphNode node) {
 		checkNull(node);
-		ArrayList list = h.getListWithID(Integer. parseInt(node.getID()));
+		ArrayList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == Integer. parseInt(node.getID()))
+			if ((Integer) list.get(i) == Integer.parseInt(node.getID()))
 				return true;
 		}
 		return false;
@@ -66,31 +66,57 @@ public class Graph {
 	}
 
 	public ArrayList<GraphNode> createArrayOfNodes() {
-		
-		ArrayList<GraphNode> tab = new  ArrayList<GraphNode>(V);
-		
-		for(int i=0; i<h.getSizeOfArray(); i++)
-			if(h.getListAt(i)!=null)
+
+		ArrayList<GraphNode> tab = new ArrayList<GraphNode>(V);
+
+		for (int i = 0; i < h.getSizeOfArray(); i++)
+			if (h.getListAt(i) != null)
 				tab.addAll(h.getListAt(i));
-		
+
 		return tab;
-		
+
 	}
-	
-	public ArrayList<GraphNode> getClosestNeighbours(GraphNode n){
+
+	public ArrayList<GraphNode> getClosestNeighbours(GraphNode n) {
 		ArrayList<GraphNode> closest = new ArrayList<GraphNode>();
-		for(int i=0; i<n.getNeighbours().size(); i++)
+		for (int i = 0; i < n.getNeighbours().size(); i++)
 			closest.add(n.getNeighbours().get(i));
 		return closest;
 	}
-	
-	public ArrayList<Integer> getDistance(GraphNode n, ArrayList<GraphNode> closest){
+
+	public ArrayList<Integer> getDistance(GraphNode n, ArrayList<GraphNode> closest) {
 		ArrayList<Integer> distance = new ArrayList<Integer>();
-		for(int i=0; i<closest.size(); i++)
+		for (int i = 0; i < closest.size(); i++)
 			distance.add(new Integer((int) getWeight(n, closest.get(i))));
 		return distance;
 	}
-	
+
+	public int getIndexOfNode(GraphNode node) {
+		int index=0;
+		
+		for(int i=0; i<h.getNodes(); i++) {
+			if(!h.getListAt(i).contains(node))
+				index+=h.getListAt(i).size();
+			else
+				return index+h.getListAt(i).indexOf(node);
+		}
+		return -1;
+	}
+
+	public ArrayList<Integer> visitedNeighbours(boolean[] visited, ArrayList<GraphNode> closest, GraphNode node){
+		ArrayList<Integer> visitedNeighbours = new ArrayList<Integer>();
+		
+		for(int i=0; i<closest.size(); i++) {
+			int index=getIndexOfNode(closest.get(i));
+			if(visited[index])
+				visitedNeighbours.add(new Integer(1));
+			else
+				visitedNeighbours.add(new Integer(0));
+		}
+		
+		return visitedNeighbours;
+	}
+
 	public void prim() {
 
 		double weight = 0;
@@ -118,7 +144,8 @@ public class Graph {
 			visited[i]=true;
 			ArrayList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
 			ArrayList<Integer> distance = getDistance(nodes.get(i), closest);
-			
+			ArrayList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
+			int index = findNextNode(visitedNeighbours, closest, distance);
 			
 		}
 			
