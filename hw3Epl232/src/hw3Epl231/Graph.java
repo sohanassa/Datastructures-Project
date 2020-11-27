@@ -152,7 +152,7 @@ public class Graph {
 	
 	public ArrayList<Edge<GraphNode>> prim() {
 
-		double weight = 0;
+		double weight = 0;	//i didnt use this wtf im supposed to use it
 		
 		boolean visited[] = new boolean[V];
 		for (int i = 0; i < V; i++)
