@@ -30,7 +30,7 @@ public class HashTable<T extends NodeID> {
 		for (int i = 0; i < sizeTemp; i++) {
 			for (int j = 0; j < table[i].size(); j++) {
 				// position in new table
-				int position = hashFunction(table[i].get(j).getID());
+				int position = hashFunction(Integer.parseInt(table[i].get(j).getID()));
 				if (temp[position] == null)
 					temp[position] = new ArrayList<T>();
 				temp[position].add(table[i].get(j));
@@ -49,7 +49,7 @@ public class HashTable<T extends NodeID> {
 
 	public void add(T node) {
 		nodes++;
-		int position = hashFunction(node.getID());
+		int position = hashFunction(Integer.parseInt(node.getID()));
 		if (table[position] == null)
 			table[position] = new ArrayList<T>();
 		table[position].add(node);

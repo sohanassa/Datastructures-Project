@@ -1,5 +1,6 @@
 package hw3Epl231;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class ForestSensors {
@@ -11,7 +12,7 @@ public class ForestSensors {
 			int option = getOption();
 			switch (option) {
 			case 1:
-				
+
 			}
 		}
 	}
@@ -36,19 +37,45 @@ public class ForestSensors {
 			System.out.print("-> ");
 			option = user.nextInt();
 		}
+		user.close();
 		return option;
 	}
-	
+
 	private static void createMST() {
-		//calls function
+		// calls function
 	}
-	
-	private static Graph readGraphFromFile(String fileName) {
+
+	private static Graph readGraphFromFile(String fileName, int d) {
 		Graph g = new Graph();
-		
-		
+		File fileObj = new File(fileName);
+		try {
+			Scanner reader = new Scanner(fileObj);
+			while (reader.hasNextLine()) {
+	            String id = reader.next();
+	            int x = reader.nextInt();
+	            int y =reader.nextInt();
+	            int temp = reader.nextInt();
+	            GraphNode node = new GraphNode(x,y,id,id.charAt(0) == '0',temp);
+	            g.add(node, d);
+	        }
+			reader.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

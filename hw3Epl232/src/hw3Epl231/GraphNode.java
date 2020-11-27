@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class GraphNode implements NodeID {
 	private int x;
 	private int y;
-	private int ID;
+	private String ID;
 	private boolean isFireStation;
 	private int temperture;
 	private ArrayList<GraphNode> neighbours;
 
-	public GraphNode(int x, int y, int id, boolean isFireStation, int temperture) {
+	public GraphNode(int x, int y, String id, boolean isFireStation, int temperture) {
 		this.x = x;
 		this.y = y;
 		this.ID = id;
@@ -20,7 +20,7 @@ public class GraphNode implements NodeID {
 		neighbours = new ArrayList<GraphNode>();
 	}
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 

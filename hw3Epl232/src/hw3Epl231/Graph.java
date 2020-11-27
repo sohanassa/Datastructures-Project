@@ -15,10 +15,10 @@ public class Graph {
 		E=0;
 	}
 
-	public void add(GraphNode node, int weight) {
+	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
 		h.add(node);
-		createEdges(node, weight);
+		createEdges(node, maxDist);
 		V++;
 	}
 
@@ -34,9 +34,9 @@ public class Graph {
 
 	public void removeVertex(GraphNode node) {
 		checkNull(node);
-		ArrayList list = h.getListWithID(node.getID());
+		ArrayList list = h.getListWithID(Integer. parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == node.getID())
+			if ((Integer) list.get(i) == Integer. parseInt(node.getID()))
 				list.remove(i);
 		}
 		// werk here
@@ -44,9 +44,9 @@ public class Graph {
 
 	public boolean vertexExists(GraphNode node) {
 		checkNull(node);
-		ArrayList list = h.getListWithID(node.getID());
+		ArrayList list = h.getListWithID(Integer. parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == node.getID())
+			if ((Integer) list.get(i) == Integer. parseInt(node.getID()))
 				return true;
 		}
 		return false;
