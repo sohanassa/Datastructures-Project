@@ -9,17 +9,19 @@ import java.util.Scanner;
 public class ForestSensors {
 
 	public static void main(String[] args) {
-		int d = Integer.parseInt(args[1]);
-		Graph g = readGraphFromFile(args[0], d);
-		ArrayList<GraphNode> mst = new ArrayList(); 
+		// int d = Integer.parseInt(args[1]);
+		int d = 1000;
+		Graph g = readGraphFromFile("input1.txt", d);
+		System.out.println(g);
+		ArrayList<MyEdge<GraphNode>> mst = null;
 		while (true) {
 			int option = getOption();
 			switch (option) {
 			case 1:
-				// call PRIM
+				mst = g.prim();
 				break;
 			case 2:
-				// call print
+				g.printMinimumSpanningTree(mst);
 				break;
 			case 3:
 				GraphNode newNode = readVertexFromUser();
@@ -76,8 +78,10 @@ public class ForestSensors {
 			Scanner reader = new Scanner(fileObj);
 			while (reader.hasNextLine()) {
 				String id = reader.next();
-				int x = reader.nextInt();
-				int y = reader.nextInt();
+				String str1 = reader.next();
+				int x = Integer.parseInt(str1.substring(1, str1.length()-1));
+				String str2 = reader.next();
+				int y = Integer.parseInt(str2.substring(0, str2.length()-1));
 				int temp = reader.nextInt();
 				GraphNode node = new GraphNode(x, y, id, id.charAt(0) == '0', temp);
 				g.add(node, d);
@@ -121,5 +125,5 @@ public class ForestSensors {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 }
