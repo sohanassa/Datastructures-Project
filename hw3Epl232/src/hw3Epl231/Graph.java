@@ -36,7 +36,7 @@ public class Graph {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
 			for(int c=0; c<nodes.size();i++)
 				if(!nodes.get(c).equals(node) && getWeight(node, nodes.get(c))<=maxDist)
-					node.getNeighbours().add(nodes.get(c));
+					node.addNeighbour(nodes.get(c));
 		}
 
 	}
