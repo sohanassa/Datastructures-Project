@@ -17,7 +17,6 @@ public class Graph {
 		V = 0;
 		E = 0;
 	}
-	
 
 	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
@@ -32,10 +31,11 @@ public class Graph {
 	// graph that has a smaller distance than maxDist
 	private void createEdges(GraphNode node, int maxDist) {
 
+		checkNull(node);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
-			for(int c=0; c<nodes.size();i++)
-				if(!nodes.get(c).equals(node) && getWeight(node, nodes.get(c))<=maxDist)
+			for (int c = 0; c < nodes.size(); i++)
+				if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist)
 					node.addNeighbour(nodes.get(c));
 		}
 
@@ -48,15 +48,21 @@ public class Graph {
 	}
 
 	public void removeVertex(GraphNode node) {
-		V--;
 		checkNull(node);
-		// werk here
 
-		LinkedList list = h.getListWithID(Integer.parseInt(node.getID()));
-		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == Integer.parseInt(node.getID())) {
-				list.remove(i);
-				break;
+		for (int i = 0; i < h.getSizeOfArray(); i++) {
+			LinkedList<GraphNode> nodes = h.getListAt(i);
+
+			// deleting from neighbors if it exists
+			for (int c = 0; c < nodes.size(); i++)
+				if (!nodes.get(c).equals(node) && nodes.get(c).getNeighbours().contains(node))
+					node.removeNeighbour(node);
+			
+			// deleting from nodes
+			if (nodes.contains(nodes)) {
+				nodes.remove(nodes);
+				h.addLinkedList(nodes, i);
+				V--;
 			}
 		}
 	}
