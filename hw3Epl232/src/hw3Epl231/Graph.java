@@ -25,7 +25,12 @@ public class Graph {
 		V++;
 	}
 
+	// connects the given node to other existing nodes in the graph aka hashtable
+	// does that by inserting the given node in the neighbour list of each node in
+	// the
+	// graph that has a smaller distance than maxDist
 	private void createEdges(GraphNode node, int maxDist) {
+
 	}
 
 	public boolean isEdge(GraphNode node1, GraphNode node2) {
@@ -37,6 +42,8 @@ public class Graph {
 	public void removeVertex(GraphNode node) {
 		V--;
 		checkNull(node);
+		// werk here
+
 		LinkedList list = h.getListWithID(Integer.parseInt(node.getID()));
 		for (int i = 0; i < list.size(); i++) {
 			if ((Integer) list.get(i) == Integer.parseInt(node.getID())) {
@@ -44,7 +51,6 @@ public class Graph {
 				break;
 			}
 		}
-		// werk here
 	}
 
 	public boolean vertexExists(GraphNode node) {
@@ -154,37 +160,7 @@ public class Graph {
 		return -1;
 	}
 
-	/*
-	 * =======
-	 * 
-	 * >>>>>>> branch 'master' of https://github.com/sohanassa/EPL231-HW3.git public
-	 * ArrayList<MyEdge<GraphNode>> prim() {
-	 * 
-	 * double weight = 0; // i didnt use this wtf im supposed to use it
-	 * 
-	 * boolean visited[] = new boolean[V]; for (int i = 0; i < V; i++) visited[i] =
-	 * false;
-	 * 
-	 * ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
-	 * 
-	 * LinkedList<GraphNode> nodes = createArrayOfNodes();
-	 * 
-	 * boolean allVisited = false; int i = 0; while (!allVisited) { visited[i] =
-	 * true; LinkedList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
-	 * LinkedList<Integer> distance = getDistance(nodes.get(i), closest);
-	 * LinkedList<Integer> visitedNeighbours = visitedNeighbours(visited, closest,
-	 * nodes.get(i)); int index = findNextNode(visitedNeighbours, closest,
-	 * distance); if (index != -1) { tree.add(new MyEdge(nodes.get(i),
-	 * nodes.get(index), getWeight(nodes.get(i), nodes.get(index)))); i = index; }
-	 * else if (allVisited(visited)) allVisited = true; else i =
-	 * findNonVisited(visited); }
-	 * 
-	 * return tree; <<<<<<< HEAD
-	 * 
-	 * }
-	 */
-
-	public void prim() {
+	public ArrayList<MyEdge<GraphNode>> prim() {
 
 		double weight = 0;
 
@@ -198,10 +174,11 @@ public class Graph {
 		for (int i = 0; i < V; i++)
 			distance[i] = Double.MAX_VALUE;
 
-		ArrayList<MyEdge> tree = new ArrayList<MyEdge>();
+		ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
 
 		LinkedList<GraphNode> nodes = createArrayOfNodes();
 		IndexAndVertex nodesWithIndex[] = new IndexAndVertex[nodes.size()];
+
 		for (int i = 0; i < nodes.size(); i++) {
 			nodesWithIndex[i] = new IndexAndVertex(i, nodes.get(i));
 		}
@@ -222,6 +199,7 @@ public class Graph {
 			visited[indexOfNewVertexInArrays] = true;
 			tree.add(new MyEdge(closest[indexOfNewVertexInArrays], v, getWeight(closest[indexOfNewVertexInArrays], v)));
 		}
+		return tree;
 	}
 
 	private class IndexAndVertex {
@@ -257,7 +235,7 @@ public class Graph {
 		return min;
 	}
 
-	private void printMinimumSpanningTree(ArrayList<MyEdge<GraphNode>> tree) {
+	public void printMinimumSpanningTree(ArrayList<MyEdge<GraphNode>> tree) {
 		// queue to use for BFS
 		Queue<GraphNode> q = new LinkedList();
 
@@ -316,6 +294,27 @@ public class Graph {
 		return false;
 	}
 
+	public void addOnly(GraphNode node) {
+		checkNull(node);
+		h.add(node);
+	}
+
+	public void createEdge(MyEdge<GraphNode> edge) {
+		addOnly(edge.v1);
+		// working here...
+	}
+
+	public Graph CreatGraphFromEdgesList(ArrayList<MyEdge<GraphNode>> mst) {
+		checkNull(mst);
+		MyEdge currentEdge;
+		Graph g = new Graph();
+		for (int i = 0; i < mst.size(); i++) {
+			currentEdge = mst.get(i);
+			g.createEdge(currentEdge);
+		}
+		return g;
+	}
+
 	public String toString() {
 		String s = "";
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
@@ -327,5 +326,4 @@ public class Graph {
 		}
 		return s;
 	}
-
 }
