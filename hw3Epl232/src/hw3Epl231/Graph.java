@@ -17,6 +17,7 @@ public class Graph {
 		V = 0;
 		E = 0;
 	}
+	
 
 	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
