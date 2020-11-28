@@ -296,14 +296,20 @@ public class Graph {
 		return false;
 	}
 
-	public void addOnly(GraphNode node) {
+	private void addOnly(GraphNode node) {
 		checkNull(node);
-		h.add(node);
+		V++;
+		if (!vertexExists(node))
+			h.add(node);
 	}
 
-	public void createEdge(MyEdge<GraphNode> edge) {
+	private void createEdge(MyEdge<GraphNode> edge) {
+		checkNull(edge);
+		E++;
 		addOnly(edge.v1);
-		// working here...
+		addOnly(edge.v2);
+		edge.v1.addNeighbour(edge.v2);
+		edge.v2.addNeighbour(edge.v1);
 	}
 
 	public Graph CreatGraphFromEdgesList(ArrayList<MyEdge<GraphNode>> mst) {
