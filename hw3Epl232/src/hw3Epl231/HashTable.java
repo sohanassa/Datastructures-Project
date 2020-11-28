@@ -68,16 +68,16 @@ public class HashTable<T extends NodeID> {
 	public LinkedList getListWithID(int id) {
 		return table[hashFunction(id)];
 	}
-	
+
 	public int getIntValue(String s) {
 		return Integer.parseInt(s);
 	}
-	
+
 	public void addLinkedList(LinkedList newNodes, int index) {
-		if(!newNodes.isEmpty() && index>=0 && index<size)
-			table[index]=newNodes;
+		if (!newNodes.isEmpty() && index >= 0 && index < size)
+			table[index] = newNodes;
 	}
-	
+
 	public static void main(String[] args) {
 		HashTable<GraphNode> h = new HashTable();
 		h.add(new GraphNode(1, 1, "01", false, 10));
@@ -104,14 +104,13 @@ public class HashTable<T extends NodeID> {
 		h.add(new GraphNode(1, 1, "22", false, 10));
 		h.getListWithID(1);
 		Iterator<GraphNode> it = h.getListWithID(1).iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			it.next().getID().contentEquals("01");
 		}
 		System.out.println(h.getListWithID(1).pop());
 		System.out.println(h.getListWithID(1).pop());
 		System.out.println(h.getListWithID(1).pop());
 		System.out.println(h.getListWithID(1).pop());
-		
-		
+
 	}
 }
