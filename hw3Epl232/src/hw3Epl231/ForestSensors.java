@@ -3,6 +3,7 @@ package hw3Epl231;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ForestSensors {
@@ -10,6 +11,7 @@ public class ForestSensors {
 	public static void main(String[] args) {
 		int d = Integer.parseInt(args[1]);
 		Graph g = readGraphFromFile(args[0], d);
+		ArrayList<GraphNode> mst = new ArrayList(); 
 		while (true) {
 			int option = getOption();
 			switch (option) {
