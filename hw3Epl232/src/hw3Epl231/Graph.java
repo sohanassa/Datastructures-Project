@@ -37,8 +37,15 @@ public class Graph {
 			for (int c = 0; c < nodes.size(); i++)
 				if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist)
 					node.addNeighbour(nodes.get(c));
-		}
 
+			if (nodes != null) {
+				for (int c = 0; c < nodes.size(); i++)
+					if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist) {
+						node.addNeighbour(nodes.get(c));
+						nodes.get(c).addNeighbour(node);
+					}
+			}
+		}
 	}
 
 	public boolean isEdge(GraphNode node1, GraphNode node2) {
