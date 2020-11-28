@@ -17,7 +17,6 @@ public class Graph {
 		V = 0;
 		E = 0;
 	}
-	
 
 	public void add(GraphNode node, int maxDist) {
 		checkNull(node);
@@ -34,8 +33,8 @@ public class Graph {
 
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
-			for(int c=0; c<nodes.size();i++)
-				if(!nodes.get(c).equals(node) && getWeight(node, nodes.get(c))<=maxDist)
+			for (int c = 0; c < nodes.size(); i++)
+				if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist)
 					node.getNeighbours().add(nodes.get(c));
 		}
 
