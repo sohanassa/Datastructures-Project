@@ -34,17 +34,13 @@ public class Graph {
 		checkNull(node);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
-			for (int c = 0; c < nodes.size(); i++)
-				if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist)
-					node.addNeighbour(nodes.get(c));
-
-			if (nodes != null) {
+			if (nodes != null)
 				for (int c = 0; c < nodes.size(); i++)
 					if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist) {
 						node.addNeighbour(nodes.get(c));
 						nodes.get(c).addNeighbour(node);
 					}
-			}
+
 		}
 	}
 
@@ -64,7 +60,7 @@ public class Graph {
 			for (int c = 0; c < nodes.size(); i++)
 				if (!nodes.get(c).equals(node) && nodes.get(c).getNeighbours().contains(node))
 					node.removeNeighbour(node);
-			
+
 			// deleting from nodes
 			if (nodes.contains(nodes)) {
 				nodes.remove(nodes);
