@@ -33,9 +33,9 @@ public class MyEdge<E> {
 
 	public E getOtherObject(E obj) {
 		if (v1.equals(obj))
-			return v1;
-		if (v2.equals(obj))
 			return v2;
+		if (v2.equals(obj))
+			return v1;
 		return null;
 	}
 }

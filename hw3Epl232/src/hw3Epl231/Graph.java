@@ -34,17 +34,12 @@ public class Graph {
 		checkNull(node);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
-			for (int c = 0; c < nodes.size(); i++)
-				if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist)
-					node.addNeighbour(nodes.get(c));
-
-			if (nodes != null) {
-				for (int c = 0; c < nodes.size(); i++)
+			if (nodes != null)
+				for (int c = 0; c < nodes.size(); c++)
 					if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist) {
 						node.addNeighbour(nodes.get(c));
 						nodes.get(c).addNeighbour(node);
 					}
-			}
 		}
 	}
 
@@ -64,7 +59,7 @@ public class Graph {
 			for (int c = 0; c < nodes.size(); i++)
 				if (!nodes.get(c).equals(node) && nodes.get(c).getNeighbours().contains(node))
 					node.removeNeighbour(node);
-			
+
 			// deleting from nodes
 			if (nodes.contains(nodes)) {
 				nodes.remove(nodes);
@@ -186,8 +181,6 @@ public class Graph {
 		double weight = 0;
 
 		boolean visited[] = new boolean[V];
-		for (int i = 0; i < V; i++)
-			visited[i] = false;
 
 		GraphNode closest[] = new GraphNode[this.V];
 
@@ -198,6 +191,7 @@ public class Graph {
 		ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
 
 		LinkedList<GraphNode> nodes = createArrayOfNodes();
+		int k = nodes.size();
 		IndexAndVertex nodesWithIndex[] = new IndexAndVertex[nodes.size()];
 
 		for (int i = 0; i < nodes.size(); i++) {
@@ -207,13 +201,15 @@ public class Graph {
 		GraphNode v = nodes.get(0);
 		visited[0] = true;
 
-		for (int i = 0; i < V; i++) {
+		for (int i = 1; i < V; i++) {
 			LinkedList<GraphNode> neighbours = v.getNeighbours();
+			
 			for (int c = 0; c < neighbours.size(); c++) {
 				int indexOfVertexInArrays = getIndexOfVertexFromList(neighbours.get(c), nodesWithIndex);
-				if (getWeight(v, neighbours.get(c)) < distance[indexOfVertexInArrays])
+				if (getWeight(v, neighbours.get(c)) < distance[indexOfVertexInArrays]) {
 					distance[indexOfVertexInArrays] = getWeight(v, neighbours.get(c));
-				closest[indexOfVertexInArrays] = nodes.get(i);
+					closest[indexOfVertexInArrays] = v;
+				}
 			}
 			v = minVertex(visited, distance);
 			int indexOfNewVertexInArrays = getIndexOfVertexFromList(v, nodesWithIndex);
@@ -235,7 +231,7 @@ public class Graph {
 
 	private int getIndexOfVertexFromList(GraphNode vertex, IndexAndVertex indexAndVertexArray[]) {
 		for (int i = 0; i < indexAndVertexArray.length; i++) {
-			if (indexAndVertexArray[i].equals(vertex))
+			if (indexAndVertexArray[i].node.equals(vertex))
 				return indexAndVertexArray[i].index;
 		}
 		return -1;
@@ -261,7 +257,7 @@ public class Graph {
 		Queue<GraphNode> q = new LinkedList();
 
 		// check if "02" vertex exists in tree
-		if (nodeWithIdExistsInList(h.getListWithID(h.getIntValue(startVertex)), startVertex)) {
+		if (!nodeWithIdExistsInList(h.getListWithID(h.getIntValue(startVertex)), startVertex)) {
 			System.out.println("Vertex with ID 02 not in tree!");
 			System.exit(-1);
 		}
@@ -274,6 +270,7 @@ public class Graph {
 
 		while (!q.isEmpty()) {
 			GraphNode current = q.poll();
+			//System.out.println(current);
 			// gets an edge which has the current vertex
 			MyEdge currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			// all the vertexes that have an edge with current are added to the queue

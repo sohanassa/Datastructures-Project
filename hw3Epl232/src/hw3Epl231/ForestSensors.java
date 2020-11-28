@@ -11,16 +11,24 @@ public class ForestSensors {
 	public static void main(String[] args) {
 		// int d = Integer.parseInt(args[1]);
 		int d = 1000;
-		Graph g = readGraphFromFile("input1.txt", d);
-		System.out.println(g);
+		Graph g = readGraphFromFile("input2.txt", d);
+		// System.out.println(g);
 		ArrayList<MyEdge<GraphNode>> mst = null;
+		Scanner user = new Scanner(System.in);
 		while (true) {
-			int option = getOption();
+			int option = getOption(user);
 			switch (option) {
 			case 1:
 				mst = g.prim();
+				//g.printMinimumSpanningTree(mst);
+				System.out.println("\nCreated mimimum spanning tree!");
 				break;
 			case 2:
+				if (mst == null) {
+					System.out.println("\nMust calculate the minimum spanning tree first!");
+					break;
+				}
+				System.out.println("\nThe minimun spanning tree:");
 				g.printMinimumSpanningTree(mst);
 				break;
 			case 3:
@@ -38,17 +46,18 @@ public class ForestSensors {
 				break;
 
 			case 6:
-				saveGraphInFile(g, args[0]);
+				System.out.println("\nGraph saved back in file!");
+				saveGraphInFile(g, "input1.txt");
 				return;
 			}
 		}
 	}
 
-	private static int getOption() {
-		Scanner user = new Scanner(System.in);
+	private static int getOption(Scanner user) {
+		
 		int option = 0;
 		// READNG FROM USER
-		System.out.println("Please select an option:");
+		System.out.println("\nPlease select an option:");
 		System.out.println("1 - Calculate minimum spanning tree!");
 		System.out.println("2 - Print the minimum spanning tree!");
 		System.out.println("3 - Add new vertex!");
@@ -63,7 +72,6 @@ public class ForestSensors {
 			System.out.print("-> ");
 			option = user.nextInt();
 		}
-		user.close();
 		return option;
 	}
 
@@ -79,9 +87,9 @@ public class ForestSensors {
 			while (reader.hasNextLine()) {
 				String id = reader.next();
 				String str1 = reader.next();
-				int x = Integer.parseInt(str1.substring(1, str1.length()-1));
+				int x = Integer.parseInt(str1.substring(1, str1.length() - 1));
 				String str2 = reader.next();
-				int y = Integer.parseInt(str2.substring(0, str2.length()-1));
+				int y = Integer.parseInt(str2.substring(0, str2.length() - 1));
 				int temp = reader.nextInt();
 				GraphNode node = new GraphNode(x, y, id, id.charAt(0) == '0', temp);
 				g.add(node, d);
