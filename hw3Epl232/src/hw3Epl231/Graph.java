@@ -153,49 +153,41 @@ public class Graph {
 				return i;
 		return -1;
 	}
-	
+
 	/*
-=======
+	 * =======
+	 * 
+	 * >>>>>>> branch 'master' of https://github.com/sohanassa/EPL231-HW3.git public
+	 * ArrayList<MyEdge<GraphNode>> prim() {
+	 * 
+	 * double weight = 0; // i didnt use this wtf im supposed to use it
+	 * 
+	 * boolean visited[] = new boolean[V]; for (int i = 0; i < V; i++) visited[i] =
+	 * false;
+	 * 
+	 * ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
+	 * 
+	 * LinkedList<GraphNode> nodes = createArrayOfNodes();
+	 * 
+	 * boolean allVisited = false; int i = 0; while (!allVisited) { visited[i] =
+	 * true; LinkedList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
+	 * LinkedList<Integer> distance = getDistance(nodes.get(i), closest);
+	 * LinkedList<Integer> visitedNeighbours = visitedNeighbours(visited, closest,
+	 * nodes.get(i)); int index = findNextNode(visitedNeighbours, closest,
+	 * distance); if (index != -1) { tree.add(new MyEdge(nodes.get(i),
+	 * nodes.get(index), getWeight(nodes.get(i), nodes.get(index)))); i = index; }
+	 * else if (allVisited(visited)) allVisited = true; else i =
+	 * findNonVisited(visited); }
+	 * 
+	 * return tree; <<<<<<< HEAD
+	 * 
+	 * }
+	 */
 
->>>>>>> branch 'master' of https://github.com/sohanassa/EPL231-HW3.git
-	public ArrayList<MyEdge<GraphNode>> prim() {
-
-		double weight = 0; // i didnt use this wtf im supposed to use it
-
-		boolean visited[] = new boolean[V];
-		for (int i = 0; i < V; i++)
-			visited[i] = false;
-
-		ArrayList<MyEdge<GraphNode>> tree = new ArrayList<MyEdge<GraphNode>>();
-
-		LinkedList<GraphNode> nodes = createArrayOfNodes();
-
-		boolean allVisited = false;
-		int i = 0;
-		while (!allVisited) {
-			visited[i] = true;
-			LinkedList<GraphNode> closest = getClosestNeighbours(nodes.get(i));
-			LinkedList<Integer> distance = getDistance(nodes.get(i), closest);
-			LinkedList<Integer> visitedNeighbours = visitedNeighbours(visited, closest, nodes.get(i));
-			int index = findNextNode(visitedNeighbours, closest, distance);
-			if (index != -1) {
-				tree.add(new MyEdge(nodes.get(i), nodes.get(index), getWeight(nodes.get(i), nodes.get(index))));
-				i = index;
-			} else if (allVisited(visited))
-				allVisited = true;
-			else
-				i = findNonVisited(visited);
-		}
-
-		return tree;
-<<<<<<< HEAD
-	
-	}	*/
-	
 	public void prim() {
 
 		double weight = 0;
-		
+
 		boolean visited[] = new boolean[V];
 		for (int i = 0; i < V; i++)
 			visited[i] = false;
@@ -211,32 +203,55 @@ public class Graph {
 		ArrayList<MyEdge> tree = new ArrayList<MyEdge>();
 
 		LinkedList<GraphNode> nodes = createArrayOfNodes();
-		
+		IndexAndVertex nodesWithIndex[] = new IndexAndVertex[nodes.size()];
+		for (int i = 0; i < nodes.size(); i++) {
+			nodesWithIndex[i] = new IndexAndVertex(i, nodes.get(i));
+		}
+
 		GraphNode v = nodes.get(0);
 		visited[0] = true;
-		
-		for(int i=0; i<V; i++) {
-			LinkedList<GraphNode> neighbours = getClosestNeighbours(nodes.get(i));
-			for(int c=0; c<neighbours.size(); c++) 
-				if(getWeight(nodes.get(i), neighbours.get(c))<distance[i]) {
-					distance[getIndexOfNode(neighbours.get(c))]=getWeight(nodes.get(i), neighbours.get(c));
-					closest[getIndexOfNode(neighbours.get(c))]= nodes.get(i);
-				}
+
+		for (int i = 0; i < V; i++) {
+			LinkedList<GraphNode> neighbours = v.getNeighbours();
+			for (int c = 0; c < neighbours.size(); c++) {
+				int indexOfVertexInArrays = getIndexOfVertexFromList(neighbours.get(c), nodesWithIndex);
+				if (getWeight(v, neighbours.get(c)) < distance[indexOfVertexInArrays])
+					distance[indexOfVertexInArrays] = getWeight(v, neighbours.get(c));
+				closest[indexOfVertexInArrays] = nodes.get(i);
+			}
 			v = minVertex(visited, distance);
-			visited[getIndexOfNode(v)]=true;
-			tree.add(new MyEdge(closest[getIndexOfNode(v)], v, getWeight(closest[getIndexOfNode(v)], v)));
+			int indexOfNewVertexInArrays = getIndexOfVertexFromList(v, nodesWithIndex);
+			visited[indexOfNewVertexInArrays] = true;
+			tree.add(new MyEdge(closest[indexOfNewVertexInArrays], v, getWeight(closest[indexOfNewVertexInArrays], v)));
 		}
 	}
-	
+
+	private class IndexAndVertex {
+		public int index;
+		public GraphNode node;
+
+		public IndexAndVertex(int i, GraphNode n) {
+			index = i;
+			node = n;
+		}
+	}
+
+	private int getIndexOfVertexFromList(GraphNode vertex, IndexAndVertex indexAndVertexArray[]) {
+		for (int i = 0; i < indexAndVertexArray.length; i++) {
+			if (indexAndVertexArray[i].equals(vertex))
+				return indexAndVertexArray[i].index;
+		}
+		return -1;
+	}
 
 	private GraphNode minVertex(boolean visited[], double distance[]) {
 		LinkedList<GraphNode> nodes = createArrayOfNodes();
 		GraphNode min = nodes.get(0);
 		double minimum = Double.MAX_VALUE;
-		for (int i = 0; i < V; i++) {
+		for (int i = 0; i < nodes.size(); i++) {
 			if (visited[i] == true)
 				continue;
-			if (distance[i] < minimum){
+			if (distance[i] < minimum) {
 				min = nodes.get(i);
 				minimum = distance[i];
 			}
