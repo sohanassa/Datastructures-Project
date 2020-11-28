@@ -35,7 +35,9 @@ public class Graph {
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
 			if (nodes != null)
+
 				for (int c = 0; c < nodes.size(); c++)
+
 					if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist) {
 						node.addNeighbour(nodes.get(c));
 						nodes.get(c).addNeighbour(node);
@@ -203,7 +205,7 @@ public class Graph {
 
 		for (int i = 1; i < V; i++) {
 			LinkedList<GraphNode> neighbours = v.getNeighbours();
-			
+
 			for (int c = 0; c < neighbours.size(); c++) {
 				int indexOfVertexInArrays = getIndexOfVertexFromList(neighbours.get(c), nodesWithIndex);
 				if (getWeight(v, neighbours.get(c)) < distance[indexOfVertexInArrays]) {
@@ -270,7 +272,7 @@ public class Graph {
 
 		while (!q.isEmpty()) {
 			GraphNode current = q.poll();
-			//System.out.println(current);
+			// System.out.println(current);
 			// gets an edge which has the current vertex
 			MyEdge currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			// all the vertexes that have an edge with current are added to the queue

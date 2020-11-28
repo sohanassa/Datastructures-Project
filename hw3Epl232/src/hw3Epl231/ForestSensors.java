@@ -46,8 +46,9 @@ public class ForestSensors {
 				break;
 
 			case 6:
-				System.out.println("\nGraph saved back in file!");
 				saveGraphInFile(g, "input1.txt");
+				System.out.println("\nGraph saved back in file!");
+				System.out.println("Program Terminated!");
 				return;
 			}
 		}
