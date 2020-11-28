@@ -72,4 +72,9 @@ public class GraphNode implements NodeID {
 	public String toString() {
 		return ID;
 	}
+	
+	public void removeNeighbour(GraphNode node) {
+		neighbours.remove(node);
+	}
+	
 }

@@ -73,6 +73,11 @@ public class HashTable<T extends NodeID> {
 		return Integer.parseInt(s);
 	}
 	
+	public void addLinkedList(LinkedList newNodes, int index) {
+		if(!newNodes.isEmpty() && index>=0 && index<size)
+			table[index]=newNodes;
+	}
+	
 	public static void main(String[] args) {
 		HashTable<GraphNode> h = new HashTable();
 		h.add(new GraphNode(1, 1, "01", false, 10));
