@@ -57,13 +57,18 @@ public class GraphNode implements NodeID {
 			return true;
 		return false;
 	}
-	
+
 	public String getStringStatus() {
-		String s="";
-		s=s+ID+"\t"+"["+x+","+y+"]"+"\t"+temperture;
+		String s = "";
+		s = s + ID + "\t" + "[" + x + "," + y + "]" + "\t" + temperture;
 		return s;
 	}
-	
+
+	public void addNeighbour(GraphNode newNode) {
+		if (!neighbours.contains(newNode))
+			neighbours.add(newNode);
+	}
+
 	public String toString() {
 		return ID;
 	}
