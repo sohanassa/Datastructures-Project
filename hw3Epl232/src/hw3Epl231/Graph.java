@@ -230,17 +230,18 @@ public class Graph {
 	
 
 	private GraphNode minVertex(boolean visited[], double distance[]) {
-		int min = 0;
+		LinkedList<GraphNode> nodes = createArrayOfNodes();
+		GraphNode min = nodes.get(0);
 		double minimum = Double.MAX_VALUE;
 		for (int i = 0; i < V; i++) {
 			if (visited[i] == true)
-				continue; // skip nodes already in MST
+				continue;
 			if (distance[i] < minimum){
-				min = i;
+				min = nodes.get(i);
 				minimum = distance[i];
 			}
 		}
-		return min; // Return the minimum among all distances
+		return min;
 	}
 
 	private void printMinimumSpanningTree(ArrayList<MyEdge<GraphNode>> tree) {
