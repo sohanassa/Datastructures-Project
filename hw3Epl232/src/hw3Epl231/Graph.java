@@ -170,8 +170,6 @@ public class Graph {
 			visited[i] = false;
 
 		GraphNode closest[] = new GraphNode[this.V];
-		for (int i = 0; i < V; i++)
-			closest[i] = null;
 
 		double distance[] = new double[this.V];
 		for (int i = 0; i < V; i++)
