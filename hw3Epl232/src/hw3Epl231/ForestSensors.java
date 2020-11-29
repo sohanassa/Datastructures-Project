@@ -11,8 +11,7 @@ public class ForestSensors {
 	public static void main(String[] args) {
 		// int d = Integer.parseInt(args[1]);
 		int d = 1000;
-		Graph g = readGraphFromFile("input2.txt", d);
-		// System.out.println(g);
+		Graph g = readGraphFromFile("input1.txt", d);
 		ArrayList<MyEdge<GraphNode>> mst = null;
 		Scanner user = new Scanner(System.in);
 		while (true) {
@@ -20,14 +19,11 @@ public class ForestSensors {
 			switch (option) {
 			case 1:
 				mst = g.prim();
-				//g.printMinimumSpanningTree(mst);
 				System.out.println("\nCreated mimimum spanning tree!");
 				break;
 			case 2:
-				if (mst == null) {
-					System.out.println("\nMust calculate the minimum spanning tree first!");
+				if (checkNullMST(mst))
 					break;
-				}
 				System.out.println("\nThe minimun spanning tree:");
 				g.printMinimumSpanningTree(mst);
 				break;
@@ -41,8 +37,13 @@ public class ForestSensors {
 				break;
 
 			case 5:
-				String idForTemp = readIdFromUser();
-				// call function that informs node with id idForTemp about temperature
+				if (checkNullMST(mst))
+					break;
+				String idForTemperature = readIdFromUser();
+				Graph minimumGraph = g.CreatGraphFromEdgesList(mst);
+				minimumGraph.informVertexAboutMaxTemp(idForTemperature);
+				System.out.println(minimumGraph);
+				System.out.println(minimumGraph.getE() + " " + minimumGraph.getV());
 				break;
 
 			case 6:
@@ -54,8 +55,16 @@ public class ForestSensors {
 		}
 	}
 
+	private static boolean checkNullMST(ArrayList<MyEdge<GraphNode>> mst) {
+		if (mst == null) {
+			System.out.println("\nMust calculate the minimum spanning tree first!");
+			return true;
+		}
+		return false;
+	}
+
 	private static int getOption(Scanner user) {
-		
+
 		int option = 0;
 		// READNG FROM USER
 		System.out.println("\nPlease select an option:");
@@ -119,7 +128,7 @@ public class ForestSensors {
 
 	private static String readIdFromUser() {
 		Scanner user = new Scanner(System.in);
-		System.out.println("Enter ID of Vertex to be deleted: ");
+		System.out.print("Enter ID of Vertex: ");
 		String id = user.next();
 		return id;
 	}

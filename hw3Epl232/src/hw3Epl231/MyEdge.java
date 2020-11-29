@@ -24,7 +24,7 @@ public class MyEdge<E> {
 	}
 
 	public boolean hasObject(E obj) {
-		return v1.equals(obj) || v2.equals(obj);
+		return ((E) v1).equals(obj) || ((E) v2).equals(obj);
 	}
 
 	public String toString() {

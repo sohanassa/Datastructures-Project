@@ -21,6 +21,15 @@ public class GraphNode implements NodeID {
 		neighbours = new LinkedList<GraphNode>();
 	}
 
+	public GraphNode(GraphNode cpy) {
+		this.x = cpy.x;
+		this.y = cpy.y;
+		this.ID = cpy.ID;
+		this.isFireStation = cpy.isFireStation;
+		this.temperture = cpy.temperture;
+		neighbours = new LinkedList<GraphNode>();
+	}
+
 	public String getID() {
 		return ID;
 	}
@@ -31,6 +40,14 @@ public class GraphNode implements NodeID {
 
 	public int getY() {
 		return y;
+	}
+
+	public int getTemperture() {
+		return temperture;
+	}
+
+	public void setTemperture(int newTemp) {
+		temperture = newTemp;
 	}
 
 	public boolean isFireStation() {
@@ -52,9 +69,13 @@ public class GraphNode implements NodeID {
 		return false;
 	}
 
-	public boolean equals(GraphNode node) {
-		if (ID == node.getID())
-			return true;
+	public boolean equals(Object node) {
+		if (node instanceof GraphNode) {
+			GraphNode o = (GraphNode) node;
+			if (ID == o.getID())
+				return true;
+		}
+
 		return false;
 	}
 
@@ -72,9 +93,9 @@ public class GraphNode implements NodeID {
 	public String toString() {
 		return ID;
 	}
-	
+
 	public void removeNeighbour(GraphNode node) {
 		neighbours.remove(node);
 	}
-	
+
 }

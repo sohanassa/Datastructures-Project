@@ -10,7 +10,7 @@ public class Graph {
 	private int V;
 	private int E;
 	private HashTable<GraphNode> h;
-	private static String startVertex = "02";
+	private static String startVertexID = "02";
 
 	public Graph() {
 		h = new HashTable();
@@ -18,8 +18,16 @@ public class Graph {
 		E = 0;
 	}
 
+	public int getV() {
+		return V;
+	}
+
+	public int getE() {
+		return E;
+	}
+
 	public void add(GraphNode node, int maxDist) {
-		checkNull(node);
+		checkNull(node, 22);
 		h.add(node);
 		createEdges(node, maxDist);
 		V++;
@@ -30,8 +38,7 @@ public class Graph {
 	// the
 	// graph that has a smaller distance than maxDist
 	private void createEdges(GraphNode node, int maxDist) {
-
-		checkNull(node);
+		checkNull(node, 34);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
 			if (nodes != null)
@@ -41,18 +48,19 @@ public class Graph {
 					if (!nodes.get(c).equals(node) && getWeight(node, nodes.get(c)) <= maxDist) {
 						node.addNeighbour(nodes.get(c));
 						nodes.get(c).addNeighbour(node);
+						E++;
 					}
 		}
 	}
 
 	public boolean isEdge(GraphNode node1, GraphNode node2) {
-		checkNull(node1);
-		checkNull(node2);
+		checkNull(node1, 49);
+		checkNull(node2, 50);
 		return node1.isNeightbour(node2);
 	}
 
 	public void removeVertex(GraphNode node) {
-		checkNull(node);
+		checkNull(node, 55);
 
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<GraphNode> nodes = h.getListAt(i);
@@ -72,24 +80,26 @@ public class Graph {
 	}
 
 	public boolean vertexExists(GraphNode node) {
-		checkNull(node);
-		LinkedList list = h.getListWithID(Integer.parseInt(node.getID()));
+		checkNull(node, 75);
+		LinkedList<GraphNode> list = h.getListWithID(Integer.parseInt(node.getID()));
+		if (list == null)
+			return false;
 		for (int i = 0; i < list.size(); i++) {
-			if ((Integer) list.get(i) == Integer.parseInt(node.getID()))
+			if (list.get(i).getID().equals(node.getID()))
 				return true;
 		}
 		return false;
 	}
 
 	public double getWeight(GraphNode node1, GraphNode node2) {
-		checkNull(node1);
-		checkNull(node2);
+		checkNull(node1, 85);
+		checkNull(node2, 86);
 		return Math.sqrt(Math.pow(node1.getX() - node2.getX(), 2) + Math.pow(node1.getY() - node2.getY(), 2));
 	}
 
-	private void checkNull(Object o) {
+	private void checkNull(Object o, int line) {
 		if (o == null) {
-			System.out.println("NULL POINTER!");
+			System.out.println("NULL POINTER! at " + line);
 			System.exit(-1);
 		}
 	}
@@ -214,9 +224,27 @@ public class Graph {
 				}
 			}
 			v = minVertex(visited, distance);
+			if (v == null) {
+				System.out.println("Error: disconneced vertex!");
+				System.exit(-1);
+			}
 			int indexOfNewVertexInArrays = getIndexOfVertexFromList(v, nodesWithIndex);
 			visited[indexOfNewVertexInArrays] = true;
-			tree.add(new MyEdge(closest[indexOfNewVertexInArrays], v, getWeight(closest[indexOfNewVertexInArrays], v)));
+
+			GraphNode firstNode;
+			GraphNode secondNode;
+
+			if (getVertexFromList(tree, closest[indexOfNewVertexInArrays].getID()) == null)
+				firstNode = new GraphNode(closest[indexOfNewVertexInArrays]);
+			else
+				firstNode = getVertexFromList(tree, closest[indexOfNewVertexInArrays].getID());
+
+			if (getVertexFromList(tree, v.getID()) == null)
+				secondNode = new GraphNode(v);
+			else
+				secondNode = getVertexFromList(tree, v.getID());
+
+			tree.add(new MyEdge(firstNode, secondNode, getWeight(closest[indexOfNewVertexInArrays], v)));
 		}
 		return tree;
 	}
@@ -241,7 +269,7 @@ public class Graph {
 
 	private GraphNode minVertex(boolean visited[], double distance[]) {
 		LinkedList<GraphNode> nodes = createArrayOfNodes();
-		GraphNode min = nodes.get(0);
+		GraphNode min = null;
 		double minimum = Double.MAX_VALUE;
 		for (int i = 0; i < nodes.size(); i++) {
 			if (visited[i] == true)
@@ -259,7 +287,7 @@ public class Graph {
 		Queue<GraphNode> q = new LinkedList();
 
 		// check if "02" vertex exists in tree
-		if (!nodeWithIdExistsInList(h.getListWithID(h.getIntValue(startVertex)), startVertex)) {
+		if (!nodeWithIdExistsInList(h.getListWithID(h.getIntValue(startVertexID)), startVertexID)) {
 			System.out.println("Vertex with ID 02 not in tree!");
 			System.exit(-1);
 		}
@@ -268,7 +296,7 @@ public class Graph {
 		boolean printed[] = new boolean[tree.size()]; // Initialised to false by java
 
 		// "02" vertex added
-		q.add(getVertexFromID(startVertex));
+		q.add(getVertexFromList(tree, startVertexID));
 
 		while (!q.isEmpty()) {
 			GraphNode current = q.poll();
@@ -285,6 +313,16 @@ public class Graph {
 				currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			}
 		}
+	}
+
+	private GraphNode getVertexFromList(ArrayList<MyEdge<GraphNode>> tree, String id) {
+		for (int i = 0; i < tree.size(); i++) {
+			if (tree.get(i).v1.getID().equals(id))
+				return tree.get(i).v1;
+			if (tree.get(i).v2.getID().equals(id))
+				return tree.get(i).v2;
+		}
+		return null;
 	}
 
 	private MyEdge getEdgeWithVertexFromList(ArrayList<MyEdge<GraphNode>> tree, GraphNode node, boolean[] printed) {
@@ -315,14 +353,15 @@ public class Graph {
 	}
 
 	private void addOnly(GraphNode node) {
-		checkNull(node);
-		V++;
-		if (!vertexExists(node))
+		checkNull(node, 318);
+		if (!vertexExists(node)) {
 			h.add(node);
+			V++;
+		}
 	}
 
 	private void createEdge(MyEdge<GraphNode> edge) {
-		checkNull(edge);
+		checkNull(edge, 325);
 		E++;
 		addOnly(edge.v1);
 		addOnly(edge.v2);
@@ -331,7 +370,7 @@ public class Graph {
 	}
 
 	public Graph CreatGraphFromEdgesList(ArrayList<MyEdge<GraphNode>> mst) {
-		checkNull(mst);
+		checkNull(mst, 334);
 		MyEdge currentEdge;
 		Graph g = new Graph();
 		for (int i = 0; i < mst.size(); i++) {
@@ -352,4 +391,29 @@ public class Graph {
 		}
 		return s;
 	}
+
+	private int getMaxTempForVertex(GraphNode v, GraphNode back) {
+		checkNull(v, 372);
+
+		if (v.getNeighbours().size() == 1)
+			return v.getTemperture();
+
+		LinkedList<GraphNode> neighbours = v.getNeighbours();
+		int maxTemp = v.getTemperture();
+		for (int i = 0; i < neighbours.size(); i++) {
+			if (back != null && neighbours.get(i).getID().equals(back.getID()))
+				continue;
+			int temp = getMaxTempForVertex(neighbours.get(i), v);
+			if (maxTemp < temp)
+				maxTemp = temp;
+		}
+		return maxTemp;
+	}
+
+	public void informVertexAboutMaxTemp(String id) {
+		GraphNode v = getVertexFromID(id);
+		checkNull(v, 388);
+		v.setTemperture(getMaxTempForVertex(v, null));
+	}
+
 }
