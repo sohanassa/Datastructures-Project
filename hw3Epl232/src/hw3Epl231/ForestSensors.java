@@ -12,7 +12,7 @@ public class ForestSensors {
 		// int d = Integer.parseInt(args[1]);
 		int d = 1000;
 		Graph g = readGraphFromFile("input2.txt", d);
-		ArrayList<MyEdge<GraphNode>> mst = null;
+		ArrayList<Edge<Vertex>> mst = null;
 		Graph minimumGraph = null;
 		Scanner user = new Scanner(System.in);
 		while (true) {
@@ -20,7 +20,7 @@ public class ForestSensors {
 			switch (option) {
 			case 1:
 				mst = g.prim();
-				System.out.println("\nCreated mimimum spanning tree!");
+				System.out.println("\nMimimum spanning tree calculated!");
 				break;
 			case 2:
 				if (checkNullMST(mst))
@@ -29,7 +29,7 @@ public class ForestSensors {
 				g.printMinimumSpanningTree(mst);
 				break;
 			case 3:
-				GraphNode newNode = readVertexFromUser();
+				Vertex newNode = readVertexFromUser();
 				g.add(newNode, d);
 				// need to be added to minimum tree
 			case 4:
@@ -41,11 +41,12 @@ public class ForestSensors {
 				if (checkNullMST(mst))
 					break;
 				String idForTemperature = readIdFromUser();
+				if (fireStationCheck(g, idForTemperature) == false)
+					break;
 				minimumGraph = g.CreatGraphFromEdgesList(mst);
-				minimumGraph.informVertexAboutMaxTemp(idForTemperature);
-				System.out.println("\nVertext informed about maximum temperature!\n");
-				System.out.println(minimumGraph);
-				System.out.println(minimumGraph.getE() + " " + minimumGraph.getV());
+				int temp = minimumGraph.getMaxTempForVertex(idForTemperature);
+				System.out.println("\nMaximum temperature that firestation with ID " + idForTemperature + " found is: "
+						+ temp + "!");
 				break;
 
 			case 6:
@@ -60,7 +61,7 @@ public class ForestSensors {
 		}
 	}
 
-	private static boolean checkNullMST(ArrayList<MyEdge<GraphNode>> mst) {
+	private static boolean checkNullMST(ArrayList<Edge<Vertex>> mst) {
 		if (mst == null) {
 			System.out.println("\nMust calculate the minimum spanning tree first!");
 			return true;
@@ -74,7 +75,7 @@ public class ForestSensors {
 		// READNG FROM USER
 		System.out.println("\nPlease select an option:");
 		System.out.println("1 - Calculate minimum spanning tree!");
-		System.out.println("2 - Print the minimum spanning tree!");
+		System.out.println("2 - Print the minimum spanning tree (BFS)!");
 		System.out.println("3 - Add new vertex!");
 		System.out.println("4 - Remove a vertex!");
 		System.out.println("5 - Inform fire station about forest temperature!");
@@ -106,7 +107,7 @@ public class ForestSensors {
 				String str2 = reader.next();
 				int y = Integer.parseInt(str2.substring(0, str2.length() - 1));
 				int temp = reader.nextInt();
-				GraphNode node = new GraphNode(x, y, id, id.charAt(0) == '0', temp);
+				Vertex node = new Vertex(x, y, id, id.charAt(0) == '0', temp);
 				g.add(node, d);
 			}
 			reader.close();
@@ -116,7 +117,7 @@ public class ForestSensors {
 		return g;
 	}
 
-	private static GraphNode readVertexFromUser() {
+	private static Vertex readVertexFromUser() {
 		Scanner user = new Scanner(System.in);
 		System.out.println("Enter x coordinate: ");
 		int x = user.nextInt();
@@ -126,7 +127,7 @@ public class ForestSensors {
 		String id = user.next();
 		System.out.println("Enter temperature: ");
 		int temp = user.nextInt();
-		GraphNode node = new GraphNode(x, y, id, id.charAt(0) == '0', temp);
+		Vertex node = new Vertex(x, y, id, id.charAt(0) == '0', temp);
 		user.close();
 		return node;
 	}
@@ -147,6 +148,19 @@ public class ForestSensors {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	private static boolean fireStationCheck(Graph g, String ID) {
+		if (!ID.startsWith("0")) {
+			System.out.println("\nThe given ID is not a fire station ID!");
+			return false;
+		}
+		if (!g.vertexExists(ID)) {
+			System.out.println("\nFire station does not exist in minimum spanning tree!");
+			return false;
+		}
+		return true;
+
 	}
 
 }

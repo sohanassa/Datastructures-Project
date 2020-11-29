@@ -1,11 +1,11 @@
 package hw3Epl231;
 
-public class MyEdge<E> {
+public class Edge<E> {
 	E v1;
 	E v2;
 	double weight;
 
-	MyEdge(E v1, E v2, double weight) {
+	Edge(E v1, E v2, double weight) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.weight = weight;

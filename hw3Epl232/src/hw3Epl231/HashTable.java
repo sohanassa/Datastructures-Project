@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Iterator;
 
-public class HashTable<T extends NodeID> {
+public class HashTable<T extends VertexWithID> {
 	// size of hashtable array
 	private int size;
 	// each list is a set of non-neighbours nodes
@@ -77,41 +77,5 @@ public class HashTable<T extends NodeID> {
 	public void addLinkedList(LinkedList newNodes, int index) {
 		if (!newNodes.isEmpty() && index >= 0 && index < size)
 			table[index] = newNodes;
-	}
-
-	public static void main(String[] args) {
-		HashTable<GraphNode> h = new HashTable();
-		h.add(new GraphNode(1, 1, "01", false, 10));
-		h.add(new GraphNode(1, 1, "02", false, 10));
-		h.add(new GraphNode(1, 1, "03", false, 10));
-		h.add(new GraphNode(1, 1, "04", false, 10));
-		h.add(new GraphNode(1, 1, "05", false, 10));
-		h.add(new GraphNode(1, 1, "06", false, 10));
-		h.add(new GraphNode(1, 1, "07", false, 10));
-		h.add(new GraphNode(1, 1, "08", false, 10));
-		h.add(new GraphNode(1, 1, "09", false, 10));
-		h.add(new GraphNode(1, 1, "10", false, 10));
-		h.add(new GraphNode(1, 1, "11", false, 10));
-		h.add(new GraphNode(1, 1, "12", false, 10));
-		h.add(new GraphNode(1, 1, "13", false, 10));
-		h.add(new GraphNode(1, 1, "14", false, 10));
-		h.add(new GraphNode(1, 1, "15", false, 10));
-		h.add(new GraphNode(1, 1, "16", false, 10));
-		h.add(new GraphNode(1, 1, "17", false, 10));
-		h.add(new GraphNode(1, 1, "18", false, 10));
-		h.add(new GraphNode(1, 1, "19", false, 10));
-		h.add(new GraphNode(1, 1, "20", false, 10));
-		h.add(new GraphNode(1, 1, "21", false, 10));
-		h.add(new GraphNode(1, 1, "22", false, 10));
-		h.getListWithID(1);
-		Iterator<GraphNode> it = h.getListWithID(1).iterator();
-		while (it.hasNext()) {
-			it.next().getID().contentEquals("01");
-		}
-		System.out.println(h.getListWithID(1).pop());
-		System.out.println(h.getListWithID(1).pop());
-		System.out.println(h.getListWithID(1).pop());
-		System.out.println(h.getListWithID(1).pop());
-
 	}
 }

@@ -4,30 +4,30 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class GraphNode implements NodeID {
+public class Vertex implements VertexWithID {
 	private int x;
 	private int y;
 	private String ID;
 	private boolean isFireStation;
 	private int temperture;
-	private LinkedList<GraphNode> neighbours;
+	private LinkedList<Vertex> neighbours;
 
-	public GraphNode(int x, int y, String id, boolean isFireStation, int temperture) {
+	public Vertex(int x, int y, String id, boolean isFireStation, int temperture) {
 		this.x = x;
 		this.y = y;
 		this.ID = id;
 		this.isFireStation = isFireStation;
 		this.temperture = temperture;
-		neighbours = new LinkedList<GraphNode>();
+		neighbours = new LinkedList<Vertex>();
 	}
 
-	public GraphNode(GraphNode cpy) {
+	public Vertex(Vertex cpy) {
 		this.x = cpy.x;
 		this.y = cpy.y;
 		this.ID = cpy.ID;
 		this.isFireStation = cpy.isFireStation;
 		this.temperture = cpy.temperture;
-		neighbours = new LinkedList<GraphNode>();
+		neighbours = new LinkedList<Vertex>();
 	}
 
 	public String getID() {
@@ -54,11 +54,11 @@ public class GraphNode implements NodeID {
 		return isFireStation;
 	}
 
-	public LinkedList<GraphNode> getNeighbours() {
+	public LinkedList<Vertex> getNeighbours() {
 		return neighbours;
 	}
 
-	public boolean isNeightbour(GraphNode node) {
+	public boolean isNeightbour(Vertex node) {
 		if (node == null)
 			return false;
 		for (int i = 0; i < neighbours.size(); i++) {
@@ -69,8 +69,8 @@ public class GraphNode implements NodeID {
 	}
 
 	public boolean equals(Object node) {
-		if (node instanceof GraphNode) {
-			GraphNode o = (GraphNode) node;
+		if (node instanceof Vertex) {
+			Vertex o = (Vertex) node;
 			if (ID.equals(o.getID()))
 				return true;
 		}
@@ -84,7 +84,7 @@ public class GraphNode implements NodeID {
 		return s;
 	}
 
-	public void addNeighbour(GraphNode newNode) {
+	public void addNeighbour(Vertex newNode) {
 		if (!neighbours.contains(newNode))
 			neighbours.add(newNode);
 	}
@@ -93,7 +93,7 @@ public class GraphNode implements NodeID {
 		return ID;
 	}
 
-	public void removeNeighbour(GraphNode node) {
+	public void removeNeighbour(Vertex node) {
 		neighbours.remove(node);
 	}
 
