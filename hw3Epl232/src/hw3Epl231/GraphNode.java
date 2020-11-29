@@ -65,14 +65,13 @@ public class GraphNode implements NodeID {
 			if (neighbours.get(i).equals(node))
 				return true;
 		}
-		// neighbours.contains(node);
 		return false;
 	}
 
 	public boolean equals(Object node) {
 		if (node instanceof GraphNode) {
 			GraphNode o = (GraphNode) node;
-			if (ID == o.getID())
+			if (ID.equals(o.getID()))
 				return true;
 		}
 

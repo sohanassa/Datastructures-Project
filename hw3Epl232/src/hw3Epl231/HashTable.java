@@ -30,13 +30,14 @@ public class HashTable<T extends NodeID> {
 		size = newSize;
 		LinkedList<T> temp[] = new LinkedList[newSize];
 		for (int i = 0; i < sizeTemp; i++) {
-			for (int j = 0; j < table[i].size(); j++) {
-				// position in new table
-				int position = hashFunction(getIntValue(table[i].get(j).getID()));
-				if (temp[position] == null)
-					temp[position] = new LinkedList<T>();
-				temp[position].add(table[i].get(j));
-			}
+			if (table[i] != null)
+				for (int j = 0; j < table[i].size(); j++) {
+					// position in new table
+					int position = hashFunction(getIntValue(table[i].get(j).getID()));
+					if (temp[position] == null)
+						temp[position] = new LinkedList<T>();
+					temp[position].add(table[i].get(j));
+				}
 		}
 		table = temp;
 	}

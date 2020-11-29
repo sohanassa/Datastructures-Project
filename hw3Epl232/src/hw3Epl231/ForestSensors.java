@@ -11,8 +11,9 @@ public class ForestSensors {
 	public static void main(String[] args) {
 		// int d = Integer.parseInt(args[1]);
 		int d = 1000;
-		Graph g = readGraphFromFile("input1.txt", d);
+		Graph g = readGraphFromFile("input2.txt", d);
 		ArrayList<MyEdge<GraphNode>> mst = null;
+		Graph minimumGraph = null;
 		Scanner user = new Scanner(System.in);
 		while (true) {
 			int option = getOption(user);
@@ -40,14 +41,18 @@ public class ForestSensors {
 				if (checkNullMST(mst))
 					break;
 				String idForTemperature = readIdFromUser();
-				Graph minimumGraph = g.CreatGraphFromEdgesList(mst);
+				minimumGraph = g.CreatGraphFromEdgesList(mst);
 				minimumGraph.informVertexAboutMaxTemp(idForTemperature);
+				System.out.println("\nVertext informed about maximum temperature!\n");
 				System.out.println(minimumGraph);
 				System.out.println(minimumGraph.getE() + " " + minimumGraph.getV());
 				break;
 
 			case 6:
-				saveGraphInFile(g, "input1.txt");
+				if (mst == null)
+					saveGraphInFile(g, "input1.txt");
+				else
+					saveGraphInFile(minimumGraph, "input1.txt");
 				System.out.println("\nGraph saved back in file!");
 				System.out.println("Program Terminated!");
 				return;

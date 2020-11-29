@@ -392,10 +392,12 @@ public class Graph {
 		return s;
 	}
 
-	private int getMaxTempForVertex(GraphNode v, GraphNode back) {
+	private int getMaxTempForVertex(String id, GraphNode v, GraphNode back) {
 		checkNull(v, 372);
 
-		if (v.getNeighbours().size() == 1)
+		System.out.println(v.getID());
+
+		if (!v.getID().equals(id) && v.getNeighbours().size() == 1)
 			return v.getTemperture();
 
 		LinkedList<GraphNode> neighbours = v.getNeighbours();
@@ -403,7 +405,7 @@ public class Graph {
 		for (int i = 0; i < neighbours.size(); i++) {
 			if (back != null && neighbours.get(i).getID().equals(back.getID()))
 				continue;
-			int temp = getMaxTempForVertex(neighbours.get(i), v);
+			int temp = getMaxTempForVertex(id, neighbours.get(i), v);
 			if (maxTemp < temp)
 				maxTemp = temp;
 		}
@@ -413,7 +415,7 @@ public class Graph {
 	public void informVertexAboutMaxTemp(String id) {
 		GraphNode v = getVertexFromID(id);
 		checkNull(v, 388);
-		v.setTemperture(getMaxTempForVertex(v, null));
+		v.setTemperture(getMaxTempForVertex(id, v, null));
 	}
 
 }
