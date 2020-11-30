@@ -18,6 +18,10 @@ public class ForestSensors {
 			int option = getOption(user);
 			switch (option) {
 			case 1:
+				if (mst != null || minimumGraph != null) {
+					System.out.println("\nMimimum spanning tree already calculated!");
+					break;
+				}
 				mst = g.prim();
 				minimumGraph = g.CreatGraphFromEdgesList(mst);
 				System.out.println("\nMimimum spanning tree calculated!");
