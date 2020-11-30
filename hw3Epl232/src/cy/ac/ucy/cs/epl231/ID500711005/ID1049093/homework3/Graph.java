@@ -279,7 +279,6 @@ public class Graph {
 
 		while (!q.isEmpty()) {
 			Vertex current = q.poll();
-			// System.out.println(current);
 			// gets an edge which has the current vertex
 			Edge currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			// all the vertexes that have an edge with current are added to the queue
