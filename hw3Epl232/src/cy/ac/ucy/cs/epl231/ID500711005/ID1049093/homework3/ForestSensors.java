@@ -1,5 +1,19 @@
 package cy.ac.ucy.cs.epl231.ID500711005.ID1049093.homework3;
 
+/**
+ * The Forest Sensor class is the driver class. In this class there is a menu that
+ * the user can choose between 6 options. First option is to calculate minimum
+ * spanning tree. Second option is to print the minimum spanning tree. The third 
+ * option it to add new vertex in the minimum spanning tree. Fourth option is to
+ *  remove a vertex from the minimum spanning tree. Fifth option is to inform a
+ *  fire station about forest temperature. Sixth option is to terminate the
+ *  execution of the program and save it back to file. The program takes as input
+ *  from command line an integer that represents the maximum distance allowed
+ *  between nodes so they can be considered neighbors, and a string that represents
+ *  the filename that the graph is going to be read from and saved on at the end.
+ *
+ */
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +22,14 @@ import java.util.Scanner;
 
 public class ForestSensors {
 
+	/**
+	 * Main function of the class. Takes as input from command line an integer that
+	 * represents the maximum distance allowed between nodes so they can be
+	 * considered neighbors, and a string that represents the filename that the
+	 * graph is going to be read from and saved on at the end.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		int d = Integer.parseInt(args[1]);
 		Graph g = readGraphFromFile(args[0], d);
