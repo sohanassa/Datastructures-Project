@@ -1,5 +1,12 @@
 package cy.ac.ucy.cs.epl231.ID500711005.ID1049093.homework3;
 
+/**
+ * The Graph class represents a graph of nodes. The graph consist of vertexes that are
+ * connected with edges. Each graph has a counter for vertexes and a counter for its edges.
+ * It also has a hashtable for its vertexes. The starting vertex will always be the "02" vertex.
+ *
+ */
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -392,7 +399,8 @@ public class Graph {
 	}
 
 	/**
-	 * Returns the max temperature from the fire station from all nodes.
+	 * Recursive method that returns the max temperature from the fire station from
+	 * all nodes.
 	 * 
 	 * @param id The fire station id.
 	 * @return max temperature.
