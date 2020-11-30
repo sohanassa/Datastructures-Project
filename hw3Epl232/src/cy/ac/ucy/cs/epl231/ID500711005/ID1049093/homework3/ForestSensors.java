@@ -165,7 +165,5 @@ public class ForestSensors {
 			return false;
 		}
 		return true;
-
 	}
-
 }
