@@ -10,20 +10,39 @@ public class Graph {
 	private HashTable<Vertex> h;
 	private static String startVertexID = "02";
 
+	/**
+	 * Creates new null Graph.
+	 */
 	public Graph() {
 		h = new HashTable();
 		V = 0;
 		E = 0;
 	}
 
+	/**
+	 * Getter method for the number of vertexes.
+	 * 
+	 * @return number of vertexes
+	 */
 	public int getV() {
 		return V;
 	}
 
+	/**
+	 * Getter method for the number of edges.
+	 * 
+	 * @return number of edges
+	 */
 	public int getE() {
 		return E;
 	}
 
+	/**
+	 * Adds node to the hashtable and creates edges between its neighbors.
+	 * 
+	 * @param node    Node that it is going to be added.
+	 * @param maxDist The maximum distance between neighbors.
+	 */
 	public void add(Vertex node, int maxDist) {
 		checkNull(node, 22);
 		h.add(node);
@@ -31,10 +50,12 @@ public class Graph {
 		V++;
 	}
 
-	// connects the given node to other existing nodes in the graph aka hashtable
-	// does that by inserting the given node in the neighbour list of each node in
-	// the
-	// graph that has a smaller distance than maxDist
+	/**
+	 * Connects the node to any other node that is its neighbor in the graph.
+	 * 
+	 * @param node    The node we are searching for its neighbors.
+	 * @param maxDist The maximum distance between neighbors.
+	 */
 	private void createEdges(Vertex node, int maxDist) {
 		checkNull(node, 34);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
@@ -51,34 +72,49 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * Checks if two given nodes are neighbors.
+	 * 
+	 * @param node1 First node to check.
+	 * @param node2 Second node to check.
+	 * @return True/False if they are neighbors.
+	 */
 	public boolean isEdge(Vertex node1, Vertex node2) {
 		checkNull(node1, 49);
 		checkNull(node2, 50);
 		return node1.isNeightbour(node2);
 	}
 
+	/**
+	 * Removes completely the vertex with the id from the graph.
+	 * 
+	 * @param id The id of the vertex that is going to be removed.
+	 */
 	public void removeVertex(String id) {
 		checkNull(id, 55);
 		Vertex v = getVertexFromID(id);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<Vertex> nodes = h.getListAt(i);
 
-			// deleting from neighbors if it exists
 			if (nodes == null)
 				continue;
 			for (int c = 0; c < nodes.size(); c++)
 				if (!nodes.get(c).equals(v) && nodes.get(c).getNeighbours().contains(v))
 					nodes.get(c).removeNeighbour(v);
 
-			// deleting from nodes
 			if (nodes.contains(v)) {
 				nodes.remove(v);
-				// h.addLinkedList(nodes, i);
 				V--;
 			}
 		}
 	}
 
+	/**
+	 * Checks if a vertex with the id exists in the graph.
+	 * 
+	 * @param id The id for the vertex we are searching for.
+	 * @return True/False if the vertex exists in graph.
+	 */
 	public boolean vertexExists(String id) {
 		checkNull(id, 75);
 		LinkedList<Vertex> list = h.getListWithKey(Integer.parseInt(id));
@@ -91,6 +127,13 @@ public class Graph {
 		return false;
 	}
 
+	/**
+	 * Gets the weight(distance) of the two nodes.
+	 * 
+	 * @param node1 First node.
+	 * @param node2 Second node.
+	 * @return The weight(distance) between the two nodes.
+	 */
 	public double getWeight(Vertex node1, Vertex node2) {
 		checkNull(node1, 85);
 		checkNull(node2, 86);
@@ -116,6 +159,11 @@ public class Graph {
 
 	}
 
+	/**
+	 * Prim function that calculates the minimum spanning tree of the graph.
+	 * 
+	 * @return the minimum spanning tree.
+	 */
 	public ArrayList<Edge<Vertex>> prim() {
 
 		boolean visited[] = new boolean[V];
@@ -200,6 +248,11 @@ public class Graph {
 		return min;
 	}
 
+	/**
+	 * Prints the minimum spanning tree created.
+	 * 
+	 * @param tree the minimum spanning tree.
+	 */
 	public void printMinimumSpanningTreeEdges(ArrayList<Edge<Vertex>> tree) {
 		// queue to use for BFS
 		Queue<Vertex> q = new LinkedList();
@@ -288,6 +341,12 @@ public class Graph {
 		edge.v2.addNeighbour(edge.v1);
 	}
 
+	/**
+	 * Converts the minimum spanning tree from an Array List into a graph.
+	 * 
+	 * @param mst the minimum spanning tree in an Array List form.
+	 * @return the minimum spanning tree in a Graph form.
+	 */
 	public Graph CreatGraphFromEdgesList(ArrayList<Edge<Vertex>> mst) {
 		checkNull(mst, 334);
 		Edge currentEdge;
@@ -299,6 +358,9 @@ public class Graph {
 		return g;
 	}
 
+	/**
+	 * To string method for the graph.
+	 */
 	public String toString() {
 		String s = "";
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
@@ -329,12 +391,25 @@ public class Graph {
 		return maxTemp;
 	}
 
+	/**
+	 * Returns the max temperature from the fire station from all nodes.
+	 * 
+	 * @param id The fire station id.
+	 * @return max temperature.
+	 */
 	public int getMaxTempForVertex(String id) {
 		Vertex v = getVertexFromID(id);
 		checkNull(v, 388);
 		return getMaxTempForVertex(id, v, null);
 	}
 
+	/**
+	 * Removes a neighbor and connects if possible (if within the max distance) the
+	 * neighbors of the removed node.
+	 * 
+	 * @param id The id of the node that is going to be removed.
+	 * @param d  The maximum distance between neighbors.
+	 */
 	public void removeAndConnect(String id, int d) {
 		Vertex toBeRemoved = getVertexFromID(id);
 		for (int i = 0; i < toBeRemoved.getNeighbours().size(); i++) {
