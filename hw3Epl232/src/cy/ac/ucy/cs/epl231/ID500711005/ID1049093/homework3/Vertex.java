@@ -9,7 +9,7 @@ public class Vertex implements VertexWithID {
 	private int y;
 	private String ID;
 	private boolean isFireStation;
-	private int temperture;
+	private int temperature;
 	private LinkedList<Vertex> neighbours;
 
 	public Vertex(int x, int y, String id, boolean isFireStation, int temperture) {
@@ -17,7 +17,7 @@ public class Vertex implements VertexWithID {
 		this.y = y;
 		this.ID = id;
 		this.isFireStation = isFireStation;
-		this.temperture = temperture;
+		this.temperature = temperture;
 		neighbours = new LinkedList<Vertex>();
 	}
 
@@ -26,7 +26,7 @@ public class Vertex implements VertexWithID {
 		this.y = cpy.y;
 		this.ID = cpy.ID;
 		this.isFireStation = cpy.isFireStation;
-		this.temperture = cpy.temperture;
+		this.temperature = cpy.temperature;
 		neighbours = new LinkedList<Vertex>();
 	}
 
@@ -43,11 +43,11 @@ public class Vertex implements VertexWithID {
 	}
 
 	public int getTemperture() {
-		return temperture;
+		return temperature;
 	}
 
 	public void setTemperture(int newTemp) {
-		temperture = newTemp;
+		temperature = newTemp;
 	}
 
 	public boolean isFireStation() {
@@ -80,7 +80,7 @@ public class Vertex implements VertexWithID {
 
 	public String getStringStatus() {
 		String s = "";
-		s = s + ID + "\t" + "[" + x + ", " + y + "]" + "\t" + temperture;
+		s = s + ID + "\t" + "[" + x + ", " + y + "]" + "\t" + temperature;
 		return s;
 	}
 
@@ -90,7 +90,7 @@ public class Vertex implements VertexWithID {
 	}
 
 	public String toString() {
-		return ID+" ("+temperture+")";
+		return ID+" ("+temperature+")";
 	}
 
 	public void removeNeighbour(Vertex node) {

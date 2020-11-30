@@ -209,7 +209,7 @@ public class Graph {
 			System.out.println("Vertex with ID 02 not in tree!");
 			System.exit(-1);
 		}
-		
+
 		System.out.println("\nID (Temperature) <-> ID (Temperature) Distance\n");
 		// printed array used to not get the same edge twice
 		boolean printed[] = new boolean[tree.size()]; // Initialised to false by java
@@ -231,50 +231,6 @@ public class Graph {
 				// gets the next edge of current vertex if exists
 				currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			}
-		}
-	}
-
-	public void printMinimumSpanningTree(ArrayList<Edge<Vertex>> tree) {
-		// queue to use for BFS
-		Queue<Vertex> q = new LinkedList();
-
-		// check if "02" vertex exists in tree
-		if (!nodeWithIdExistsInList(h.getListWithKey(Integer.parseInt(startVertexID)), startVertexID)) {
-			System.out.println("Vertex with ID 02 not in tree!");
-			System.exit(-1);
-		}
-
-		// printed array used to not get the same edge twice
-		boolean printed[] = new boolean[tree.size()]; // Initialised to false by java
-
-		// "02" vertex added
-		q.add(getVertexFromList(tree, startVertexID));
-		q.add(null);
-
-		while (!q.isEmpty()) {
-			boolean gotInLoop = false;
-			Vertex current = q.poll();
-			if (current != null)
-				System.out.print("ID:" + current.getID() + "  ");
-			else {
-				System.out.println();
-				continue;
-			}
-			// System.out.println(current);
-			// gets an edge which has the current vertex
-			Edge currentEdge = getEdgeWithVertexFromList(tree, current, printed);
-			// all the vertexes that have an edge with current are added to the queue
-			while (currentEdge != null) {
-				gotInLoop = true;
-				// edge is printed
-				// System.out.print(currentEdge + " ");
-				// new vertexes are added
-				q.add((Vertex) currentEdge.getOtherObject(current));
-				// gets the next edge of current vertex if exists
-				currentEdge = getEdgeWithVertexFromList(tree, current, printed);
-			}
-			if (gotInLoop && q.size() > 1)
-				q.add(null);
 		}
 	}
 
@@ -349,8 +305,7 @@ public class Graph {
 			if (h.getListAt(i) != null)
 				for (int j = 0; j < h.getListAt(i).size(); j++) {
 					s += ((Vertex) h.getListAt(i).get(j)).getStringStatus();
-					if (i < h.getSizeOfArray() - 1)
-						s += "\n";
+					s += "\n";
 				}
 		}
 		return s;
