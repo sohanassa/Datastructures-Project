@@ -57,21 +57,23 @@ public class Graph {
 		return node1.isNeightbour(node2);
 	}
 
-	public void removeVertex(Vertex node) {
-		checkNull(node, 55);
-
+	public void removeVertex(String id) {
+		checkNull(id, 55);
+		Vertex v = getVertexFromID(id);
 		for (int i = 0; i < h.getSizeOfArray(); i++) {
 			LinkedList<Vertex> nodes = h.getListAt(i);
 
 			// deleting from neighbors if it exists
-			for (int c = 0; c < nodes.size(); i++)
-				if (!nodes.get(c).equals(node) && nodes.get(c).getNeighbours().contains(node))
-					node.removeNeighbour(node);
+			if (nodes == null)
+				continue;
+			for (int c = 0; c < nodes.size(); c++)
+				if (!nodes.get(c).equals(v) && nodes.get(c).getNeighbours().contains(v))
+					nodes.get(c).removeNeighbour(v);
 
 			// deleting from nodes
-			if (nodes.contains(nodes)) {
-				nodes.remove(nodes);
-				h.addLinkedList(nodes, i);
+			if (nodes.contains(v)) {
+				nodes.remove(v);
+				// h.addLinkedList(nodes, i);
 				V--;
 			}
 		}
@@ -79,7 +81,7 @@ public class Graph {
 
 	public boolean vertexExists(String id) {
 		checkNull(id, 75);
-		LinkedList<Vertex> list = h.getListWithID(Integer.parseInt(id));
+		LinkedList<Vertex> list = h.getListWithKey(Integer.parseInt(id));
 		if (list == null)
 			return false;
 		for (int i = 0; i < list.size(); i++) {
@@ -198,16 +200,17 @@ public class Graph {
 		return min;
 	}
 
-	public void printMinimumSpanningTree(ArrayList<Edge<Vertex>> tree) {
+	public void printMinimumSpanningTreeEdges(ArrayList<Edge<Vertex>> tree) {
 		// queue to use for BFS
 		Queue<Vertex> q = new LinkedList();
 
 		// check if "02" vertex exists in tree
-		if (!nodeWithIdExistsInList(h.getListWithID(h.getIntValue(startVertexID)), startVertexID)) {
+		if (!nodeWithIdExistsInList(h.getListWithKey(Integer.parseInt(startVertexID)), startVertexID)) {
 			System.out.println("Vertex with ID 02 not in tree!");
 			System.exit(-1);
 		}
-
+		
+		System.out.println("\nID (Temperature) <-> ID (Temperature) Distance\n");
 		// printed array used to not get the same edge twice
 		boolean printed[] = new boolean[tree.size()]; // Initialised to false by java
 
@@ -228,6 +231,50 @@ public class Graph {
 				// gets the next edge of current vertex if exists
 				currentEdge = getEdgeWithVertexFromList(tree, current, printed);
 			}
+		}
+	}
+
+	public void printMinimumSpanningTree(ArrayList<Edge<Vertex>> tree) {
+		// queue to use for BFS
+		Queue<Vertex> q = new LinkedList();
+
+		// check if "02" vertex exists in tree
+		if (!nodeWithIdExistsInList(h.getListWithKey(Integer.parseInt(startVertexID)), startVertexID)) {
+			System.out.println("Vertex with ID 02 not in tree!");
+			System.exit(-1);
+		}
+
+		// printed array used to not get the same edge twice
+		boolean printed[] = new boolean[tree.size()]; // Initialised to false by java
+
+		// "02" vertex added
+		q.add(getVertexFromList(tree, startVertexID));
+		q.add(null);
+
+		while (!q.isEmpty()) {
+			boolean gotInLoop = false;
+			Vertex current = q.poll();
+			if (current != null)
+				System.out.print("ID:" + current.getID() + "  ");
+			else {
+				System.out.println();
+				continue;
+			}
+			// System.out.println(current);
+			// gets an edge which has the current vertex
+			Edge currentEdge = getEdgeWithVertexFromList(tree, current, printed);
+			// all the vertexes that have an edge with current are added to the queue
+			while (currentEdge != null) {
+				gotInLoop = true;
+				// edge is printed
+				// System.out.print(currentEdge + " ");
+				// new vertexes are added
+				q.add((Vertex) currentEdge.getOtherObject(current));
+				// gets the next edge of current vertex if exists
+				currentEdge = getEdgeWithVertexFromList(tree, current, printed);
+			}
+			if (gotInLoop && q.size() > 1)
+				q.add(null);
 		}
 	}
 
@@ -252,9 +299,9 @@ public class Graph {
 	}
 
 	private Vertex getVertexFromID(String id) {
-		for (int i = 0; i < h.getListWithID(h.getIntValue(id)).size(); i++) {
-			if (((Vertex) h.getListWithID(h.getIntValue(id)).get(i)).getID().equals(id))
-				return ((Vertex) h.getListWithID(h.getIntValue(id)).get(i));
+		for (int i = 0; i < h.getListWithKey(Integer.parseInt(id)).size(); i++) {
+			if (((Vertex) h.getListWithKey(Integer.parseInt(id)).get(i)).getID().equals(id))
+				return ((Vertex) h.getListWithKey(Integer.parseInt(id)).get(i));
 		}
 		return null;
 	}
@@ -302,7 +349,8 @@ public class Graph {
 			if (h.getListAt(i) != null)
 				for (int j = 0; j < h.getListAt(i).size(); j++) {
 					s += ((Vertex) h.getListAt(i).get(j)).getStringStatus();
-					s += "\n";
+					if (i < h.getSizeOfArray() - 1)
+						s += "\n";
 				}
 		}
 		return s;
@@ -330,5 +378,14 @@ public class Graph {
 		Vertex v = getVertexFromID(id);
 		checkNull(v, 388);
 		return getMaxTempForVertex(id, v, null);
+	}
+
+	public void removeAndConnect(String id, int d) {
+		Vertex toBeRemoved = getVertexFromID(id);
+		for (int i = 0; i < toBeRemoved.getNeighbours().size(); i++) {
+			Vertex v = toBeRemoved.getNeighbours().get(i);
+			createEdges(v, d);
+		}
+		removeVertex(id);
 	}
 }

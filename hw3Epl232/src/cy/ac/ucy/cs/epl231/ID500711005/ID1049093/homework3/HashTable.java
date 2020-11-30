@@ -9,15 +9,21 @@ public class HashTable<T extends VertexWithID> {
 	private int size;
 	// each list is a set of non-neighbours nodes
 	private LinkedList<T> table[];
-	// number of nodes in hashtbale
-	private int nodes;
+	// number of objects in hashtbale
+	private int cnt;
 
 	public HashTable() {
 		size = 5;
-		nodes = 0;
+		cnt = 0;
 		table = new LinkedList[size];
 	}
 
+	/**
+	 * Hashfunction of hashtable.
+	 * 
+	 * @param num intiger key
+	 * @return hashvalue between 0 and size-1
+	 */
 	public int hashFunction(int num) {
 		if (num % size < 0 || num % size >= size)
 			return 0;
@@ -25,6 +31,11 @@ public class HashTable<T extends VertexWithID> {
 		return num % size;
 	}
 
+	/**
+	 * Function that rehashes the hashtable with a new size.
+	 * 
+	 * @param newSize new size of table
+	 */
 	public void rehash(int newSize) {
 		int sizeTemp = size;
 		size = newSize;
@@ -33,7 +44,7 @@ public class HashTable<T extends VertexWithID> {
 			if (table[i] != null)
 				for (int j = 0; j < table[i].size(); j++) {
 					// position in new table
-					int position = hashFunction(getIntValue(table[i].get(j).getID()));
+					int position = hashFunction(Integer.parseInt(table[i].get(j).getID()));
 					if (temp[position] == null)
 						temp[position] = new LinkedList<T>();
 					temp[position].add(table[i].get(j));
@@ -42,40 +53,69 @@ public class HashTable<T extends VertexWithID> {
 		table = temp;
 	}
 
-	public int getNodes() {
-		return nodes;
+	/**
+	 * Getter for nnumber of objects.
+	 * 
+	 * @return number of objects
+	 */
+	public int getCnt() {
+		return cnt;
 	}
 
+	/**
+	 * Getter for size.
+	 * 
+	 * @return size
+	 */
 	public int getSizeOfArray() {
 		return size;
 	}
 
-	public void add(T node) {
-		nodes++;
-		int position = hashFunction(getIntValue(node.getID()));
+	/**
+	 * Function that adds the given object to the hashtable.
+	 * 
+	 * @param obj the object to b added
+	 */
+	public void add(T obj) {
+		cnt++;
+		int position = hashFunction(Integer.parseInt((obj.getID())));
 		if (table[position] == null)
 			table[position] = new LinkedList<T>();
-		table[position].add(node);
+		table[position].add(obj);
 		if (table[position].size() >= 20)
 			rehash(size * 10);
 	}
 
+	/**
+	 * Returns the list at the given index.
+	 * 
+	 * @param index
+	 * @return the list
+	 */
 	public LinkedList getListAt(int index) {
 		if (index < 0 || index >= size)
 			return null;
 		return table[index];
 	}
 
-	public LinkedList getListWithID(int id) {
-		return table[hashFunction(id)];
+	/**
+	 * Returns the list with the give key.
+	 * 
+	 * @param key the key
+	 * @return the list
+	 */
+	public LinkedList getListWithKey(int key) {
+		return table[hashFunction(key)];
 	}
 
-	public int getIntValue(String s) {
-		return Integer.parseInt(s);
-	}
-
-	public void addLinkedList(LinkedList newNodes, int index) {
-		if (!newNodes.isEmpty() && index >= 0 && index < size)
-			table[index] = newNodes;
+	/**
+	 * Adds the given list to the hashtable.
+	 * 
+	 * @param newObjects the list to be added
+	 * @param index      the index in which it will be added
+	 */
+	public void addLinkedList(LinkedList newObjects, int index) {
+		if (!newObjects.isEmpty() && index >= 0 && index < size)
+			table[index] = newObjects;
 	}
 }

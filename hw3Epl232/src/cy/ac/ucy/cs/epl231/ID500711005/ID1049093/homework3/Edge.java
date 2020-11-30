@@ -28,7 +28,7 @@ public class Edge<E> {
 	}
 
 	public String toString() {
-		return v1 + " - " + v2;
+		return v1 + "  <->  " + v2+"    "+Math.round(weight);
 	}
 
 	public E getOtherObject(E obj) {

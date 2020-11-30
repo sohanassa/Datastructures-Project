@@ -80,7 +80,7 @@ public class Vertex implements VertexWithID {
 
 	public String getStringStatus() {
 		String s = "";
-		s = s + ID + "\t" + "[" + x + "," + y + "]" + "\t" + temperture;
+		s = s + ID + "\t" + "[" + x + ", " + y + "]" + "\t" + temperture;
 		return s;
 	}
 
@@ -90,7 +90,7 @@ public class Vertex implements VertexWithID {
 	}
 
 	public String toString() {
-		return ID;
+		return ID+" ("+temperture+")";
 	}
 
 	public void removeNeighbour(Vertex node) {
